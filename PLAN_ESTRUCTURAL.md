@@ -1,7 +1,7 @@
 # PLAN ESTRUCTURAL — Proyecto quédate (DBP 2026-2)
 
 **quédate** — Plataforma de habitaciones verificadas para becarios UTEC (campus Miraflores).
-"¿Dónde queda tu U? quédate cerca."
+"quédate cerca de tu universidad"
 
 > **Curso:** CS2031 — Diseño y Bases de Datos (DBP) · Ciclo 2026-2 · UTEC
 > **Deadline:** viernes 25 de septiembre de 2026, 23:59
