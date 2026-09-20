@@ -22,7 +22,12 @@
 
 ---
 
-## Persona A — Todo lo que le toca `[issues → #5, #6, #7, #8, #9, #10, #11, #12, #13]`
+## Persona A — Todo lo que le toca `[issues → #1, #2, #3, #4, #5, #6, #7, #8, #9, #10, #11, #12, #13]`
+
+### A0. Bootstrap del repo + informe estructural `[issues → #1, #4]`
+
+- **#1 — Bootstrap** · rama `feat/dominguez/bootstrap`: repo público, ramas `main` + `develop` protegidas (1 review obligatorio), colaboradores, `.gitignore`, labels y milestones, tablero GitHub Projects. ✅ hecho en M0.
+- **#4 — Informe estructural** · rama `feat/dominguez/plan-estructural`: este documento `PLAN_ESTRUCTURAL.md` (reparto A/B/C, rutas 📍 y mapeo issue→sección→rama del Apéndice D). ✅ hecho en M0.
 
 ### A1. Endpoints que implementa `[issues → #10]`
 
@@ -113,6 +118,13 @@
 ### A8. Config transversal `[issues → #13]`
 
 📍 `config/AsyncConfig.java` (`@EnableAsync` + `ThreadPoolTaskExecutor` core 4 max 8) · `config/ModelMapperConfig.java` (bean `ModelMapper`, strict) · `event/UserRegisteredEvent.java` (payload `User`, publicado por `AuthService.register`; listener lo consume C).
+
+### A9. DTOs de auth/usuarios + ModelMapper `[issues → #7]`
+
+📍 `dto/auth/` (`RegisterRequestDTO`, `LoginRequestDTO`, `RefreshTokenRequestDTO`, `AuthResponseDTO`) · `dto/user/` (`UserResponseDTO`, `UserUpdateDTO`) · `dto/student/StudentResponseDTO` · `dto/landlord/` (`LandlordResponseDTO`, `LandlordUpdateDTO`) · rama `feat/dominguez/auth-dtos`.
+
+- `@Valid` en cada request; **jamás** se serializa el password en responses.
+- Mapeo con ModelMapper (bean estricto de `ModelMapperConfig`, #13) o mapeo manual en los DTOs; sin fugas de entidades a la API.
 
 ---
 
@@ -308,6 +320,7 @@
 
 | Sección | Contenido | Issues |
 |---|---|---|
+| A0 | Bootstrap + informe estructural | #1, #4 |
 | A1 | Endpoints auth/usuarios/admin | #10 |
 | A2 | Config base | #2, #3 |
 | A3 | Entidades base | #5 |
@@ -316,6 +329,7 @@
 | A6 | Seguridad | #11 |
 | A7 | Excepciones | #12 |
 | A8 | Config transversal | #13 |
+| A9 | DTOs auth/usuarios + ModelMapper | #7 |
 | B1 | Endpoints catálogo | #18, #19, #21, #22 |
 | B2 | Entidades catálogo | #14 |
 | B3 | Repos catálogo | #15 |
@@ -328,6 +342,7 @@
 | C4 | Servicios confianza | #26, #27, #28, #29 |
 | C5 | Eventos + correo | #30, #31 |
 | C6 | DTOs confianza | #25 |
+| — | Swagger/OpenAPI (bonus) | #32 |
 | — | Integración | #33 |
 | — | AWS EC2 + RDS | #34 |
 | — | Docker (bonus) | #35 |
@@ -335,6 +350,52 @@
 | — | postman_collection.json | #37 |
 | — | Checklist rúbrica | #38 |
 | — | Tests (bonus) | #39 |
+
+## Apéndice D — Mapa Issue → Sección → Rama
+
+> Cada issue = 1 rama `feat/<alias>/<tarea>` desde `develop` → PR a `develop`. Alias: A=`dominguez`, B=`andremejia`, C=`iygt8`.
+
+| Issue | Sección (md) | Rama |
+|---|---|---|
+| #1 | A0 | `feat/dominguez/bootstrap` |
+| #2 | A2 | `feat/dominguez/spring-setup` |
+| #3 | A2 | `feat/dominguez/config-yaml` |
+| #4 | A0 | `feat/dominguez/plan-estructural` |
+| #5 | A3 | `feat/dominguez/base-entities` |
+| #6 | A4 | `feat/dominguez/base-repos` |
+| #7 | A9 | `feat/dominguez/auth-dtos` |
+| #8 | A5 | `feat/dominguez/auth-service` |
+| #9 | A5 | `feat/dominguez/user-services` |
+| #10 | A1 | `feat/dominguez/auth-controllers` |
+| #11 | A6 | `feat/dominguez/jwt-security` |
+| #12 | A7 | `feat/dominguez/exceptions` |
+| #13 | A8 | `feat/dominguez/cross-config` |
+| #14 | B2 | `feat/andremejia/catalog-entities` |
+| #15 | B3 | `feat/andremejia/catalog-repos` |
+| #16 | B4 | `feat/andremejia/distance-calculator` |
+| #17 | B5 | `feat/andremejia/catalog-dtos` |
+| #18 | B1 | `feat/andremejia/university` |
+| #19 | B1 | `feat/andremejia/location` |
+| #20 | B4 | `feat/andremejia/room-service` |
+| #21 | B1 | `feat/andremejia/room-controllers` |
+| #22 | B1 | `feat/andremejia/publication` |
+| #23 | C2 | `feat/iygt8/trust-entities` |
+| #24 | C3 | `feat/iygt8/trust-repos` |
+| #25 | C6 | `feat/iygt8/trust-dtos` |
+| #26 | C1 | `feat/iygt8/rental-request` |
+| #27 | C1 | `feat/iygt8/visit` |
+| #28 | C1 | `feat/iygt8/review` |
+| #29 | C1 | `feat/iygt8/verification` |
+| #30 | C5 | `feat/iygt8/events` |
+| #31 | C5 | `feat/iygt8/email-service` |
+| #32 | — (bonus) | `feat/iygt8/swagger` |
+| #33 | — Integración | `feat/dominguez/integration` |
+| #34 | — AWS deploy | `feat/dominguez/aws-deploy` |
+| #35 | — Docker (bonus) | `feat/dominguez/docker` |
+| #36 | — README | `feat/iygt8/readme` |
+| #37 | — Postman | `feat/andremejia/postman` |
+| #38 | — Checklist rúbrica | `feat/iygt8/checklist` |
+| #39 | — Tests (bonus) | `feat/iygt8/tests` |
 
 ## Apéndice B — Activos de las personas
 
