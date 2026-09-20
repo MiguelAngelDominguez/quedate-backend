@@ -20,6 +20,8 @@
 
 > Los números de issues hacen referencia a la numeración real del repositorio GitHub. Cada sección indica su(s) rama(s) `feat/<alias>/<tarea>`; el mapa completo issue→sección→rama está en el Apéndice D.
 
+> 📌 **Flujo de colaboración:** ver `FLUJO_DE_RECOMENDACION.md` (cómo trabajar un issue, crear PRs hacia `develop` y qué esperar como colaborador).
+
 ---
 
 ## Persona A — Todo lo que le toca `[issues → #1, #2, #3, #4, #5, #6, #7, #8, #9, #10, #11, #12, #13]`
