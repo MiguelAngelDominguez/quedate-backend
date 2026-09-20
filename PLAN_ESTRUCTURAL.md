@@ -426,14 +426,14 @@
 | C4 | Servicios confianza | #26, #27, #28, #29 |
 | C5 | Eventos + correo | #30, #31 |
 | C6 | DTOs confianza | #25 |
-| — | Swagger/OpenAPI (bonus) | #32 |
-| — | Integración | #33 |
-| — | AWS EC2 + RDS | #34 |
-| — | Docker (bonus) | #35 |
-| — | README | #36 |
-| — | postman_collection.json | #37 |
-| — | Checklist rúbrica | #38 |
-| — | Tests (bonus) | #39 |
+| C | Swagger/OpenAPI (bonus) | #32 |
+| A | Integración | #33 |
+| A | AWS EC2 + RDS | #34 |
+| A | Docker (bonus) | #35 |
+| C | README | #36 |
+| B | postman_collection.json | #37 |
+| C | Checklist rúbrica | #38 |
+| C | Tests (bonus) | #39 |
 
 ## Apéndice D — Mapa Issue → Sección → Rama
 
