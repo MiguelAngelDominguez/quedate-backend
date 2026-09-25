@@ -1,6 +1,6 @@
 package com.quedate.config;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
+import tools.jackson.databind.ObjectMapper;
 import com.quedate.dto.ErrorResponseDTO;
 import com.quedate.security.JwtAuthenticationFilter;
 import org.springframework.beans.factory.annotation.Value;
