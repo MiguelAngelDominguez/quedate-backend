@@ -1,12 +1,13 @@
 package com.quedate.service.room;
 
+import com.quedate.dto.room.RoomDetailDTO;
+import com.quedate.dto.room.RoomSearchFilterDTO;
+import com.quedate.dto.room.RoomSummaryDTO;
 import com.quedate.entity.Room;
 import com.quedate.repository.RoomRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-
-import java.math.BigDecimal;
 
 @Service
 public class RoomService {
@@ -17,53 +18,85 @@ public class RoomService {
         this.roomRepository = roomRepository;
     }
 
-    public Page<Room> findAll(
-            Long universityId,
-            String district,
-            BigDecimal minPrice,
-            BigDecimal maxPrice,
+    public Page<RoomSummaryDTO> search(
+            RoomSearchFilterDTO filter,
             Pageable pageable
     ) {
-        return roomRepository.search(
-                universityId,
-                district,
-                minPrice,
-                maxPrice,
+        Page<Room> rooms = roomRepository.search(
+                filter.getUniversityId(),
+                filter.getDistrict(),
+                filter.getMinPrice(),
+                filter.getMaxPrice(),
                 pageable
         );
+
+        return rooms.map(this::toSummaryDTO);
     }
 
-    public Room findById(Long id) {
-        return roomRepository.findById(id)
+    public RoomDetailDTO getById(Long id) {
+        Room room = roomRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Room not found"));
+
+        return toDetailDTO(room);
     }
 
-    public Page<Room> findByOwner(Long ownerId, Pageable pageable) {
-        return roomRepository.findByOwner_Id(ownerId, pageable);
+    public Page<RoomSummaryDTO> getByLandlord(
+            Long landlordId,
+            Pageable pageable
+    ) {
+        return roomRepository.findByOwner_Id(landlordId, pageable)
+                .map(this::toSummaryDTO);
     }
 
-    public Room save(Room room) {
-        return roomRepository.save(room);
+    private RoomSummaryDTO toSummaryDTO(Room room) {
+        RoomSummaryDTO dto = new RoomSummaryDTO();
+
+        dto.setId(room.getId());
+        dto.setTitle(room.getTitle());
+        dto.setPrice(room.getPrice());
+        dto.setDistrict(
+                room.getLocation() != null
+                        ? room.getLocation().getDistrict()
+                        : null
+        );
+        dto.setUniversityName(
+                room.getUniversity() != null
+                        ? room.getUniversity().getName()
+                        : null
+        );
+
+        if (room.getImages() != null && !room.getImages().isEmpty()) {
+            dto.setImage(room.getImages().get(0));
+        }
+
+        return dto;
     }
 
-    public Room update(Long id, Room room) {
-        Room existingRoom = findById(id);
+    private RoomDetailDTO toDetailDTO(Room room) {
+        RoomDetailDTO dto = new RoomDetailDTO();
 
-        existingRoom.setTitle(room.getTitle());
-        existingRoom.setDescription(room.getDescription());
-        existingRoom.setPrice(room.getPrice());
-        existingRoom.setCapacity(room.getCapacity());
-        existingRoom.setSizeM2(room.getSizeM2());
-        existingRoom.setImages(room.getImages());
-        existingRoom.setStatus(room.getStatus());
-        existingRoom.setUniversity(room.getUniversity());
-        existingRoom.setLocation(room.getLocation());
+        dto.setId(room.getId());
+        dto.setTitle(room.getTitle());
+        dto.setDescription(room.getDescription());
+        dto.setPrice(room.getPrice());
+        dto.setCapacity(room.getCapacity());
+        dto.setSizeM2(room.getSizeM2());
+        dto.setImages(room.getImages());
+        dto.setStatus(room.getStatus());
+        dto.setVerified(room.isVerified());
 
-        return roomRepository.save(existingRoom);
-    }
+        dto.setDistrict(
+                room.getLocation() != null
+                        ? room.getLocation().getDistrict()
+                        : null
+        );
 
-    public void delete(Long id) {
-        Room room = findById(id);
-        roomRepository.delete(room);
+        dto.setUniversityName(
+                room.getUniversity() != null
+                        ? room.getUniversity().getName()
+                        : null
+        );
+
+        return dto;
     }
 }
