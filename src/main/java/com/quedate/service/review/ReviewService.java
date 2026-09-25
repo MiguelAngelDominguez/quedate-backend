@@ -14,6 +14,7 @@ import com.quedate.repository.ReviewRepository;
 import com.quedate.repository.VisitRepository;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.stereotype.Service;
+import com.quedate.exception.DuplicateResourceException;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -44,7 +45,7 @@ public class ReviewService {
                 student.getId(),
                 roomId
         )) {
-            throw new IllegalStateException(
+            throw new DuplicateResourceException(
                     "Student has already reviewed this room"
             );
         }
