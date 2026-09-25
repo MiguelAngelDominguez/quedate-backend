@@ -21,6 +21,7 @@
         <java.version>26</java.version>
         <jjwt.version>0.12.6</jjwt.version>
         <modelmapper.version>3.2.2</modelmapper.version>
+        <swagger.version>2.2.55</swagger.version>
     </properties>
 
     <dependencies>
@@ -92,6 +93,12 @@
             <groupId>org.modelmapper</groupId>
             <artifactId>modelmapper</artifactId>
             <version>${modelmapper.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>io.swagger.core.v3</groupId>
+            <artifactId>swagger-models-jakarta</artifactId>
+            <version>${swagger.version}</version>
         </dependency>
 
         <dependency>
