@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Nueva solicitud de alquiler</title>
+</head>
+<body>
+<h1>Nueva solicitud de alquiler</h1>
+
+<p>
+    Has recibido una nueva solicitud para una de tus habitaciones.
+</p>
+
+<div th:if="${rentalRequest != null}">
+    <p>
+        Mensaje:
+        <span th:text="${rentalRequest.message}">
+            Sin mensaje
+        </span>
+    </p>
+
+    <p>
+        Fecha de inicio:
+        <span th:text="${rentalRequest.startDate}">
+            -
+        </span>
+    </p>
+
+    <p>
+        Fecha de fin:
+        <span th:text="${rentalRequest.endDate}">
+            -
+        </span>
+    </p>
+</div>
+</body>
+</html>
