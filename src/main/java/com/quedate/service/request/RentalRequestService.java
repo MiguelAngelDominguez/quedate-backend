@@ -12,6 +12,7 @@ import com.quedate.repository.RentalRequestRepository;
 import com.quedate.repository.RoomRepository;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
+import com.quedate.entity.enums.RoleName;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -92,8 +93,8 @@ public class RentalRequestService {
         boolean isOwner =
                 request.getRoom().getOwner().getId().equals(actor.getId());
 
-        boolean isAdmin =
-                actor.getRole() == Role.ADMIN;
+        boolean isAdmin = actor.getRoles().stream()
+                .anyMatch(role -> role.getName() == RoleName.ADMIN);
 
         if (!isOwner && !isAdmin) {
             throw new SecurityException("Access denied");
