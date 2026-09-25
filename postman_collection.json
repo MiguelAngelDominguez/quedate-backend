@@ -1,0 +1,507 @@
+{
+  "info": {
+    "_postman_id": "quedate-api-collection",
+    "name": "Quedate API",
+    "description": "Colección Postman para probar los endpoints de Quedate.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:8080"
+    },
+    {
+      "key": "token",
+      "value": ""
+    },
+    {
+      "key": "roomId",
+      "value": "1"
+    },
+    {
+      "key": "landlordId",
+      "value": "1"
+    },
+    {
+      "key": "universityId",
+      "value": "1"
+    },
+    {
+      "key": "locationId",
+      "value": "1"
+    },
+    {
+      "key": "rentalRequestId",
+      "value": "1"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{token}}",
+        "type": "string"
+      }
+    ]
+  },
+  "item": [
+    {
+      "name": "Catálogo",
+      "item": [
+        {
+          "name": "Universidades",
+          "item": [
+            {
+              "name": "Listar universidades",
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl}}/api/v1/universities",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "universities"
+                  ]
+                }
+              }
+            },
+            {
+              "name": "Obtener universidad",
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl}}/api/v1/universities/{{universityId}}",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "universities",
+                    "{{universityId}}"
+                  ]
+                }
+              }
+            },
+            {
+              "name": "Crear universidad",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"Universidad de Lima\",\n  \"campusName\": \"Campus Principal\",\n  \"address\": \"Lima, Peru\",\n  \"latitude\": -12.0827,\n  \"longitude\": -76.9690,\n  \"website\": \"https://www.ulima.edu.pe\"\n}"
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/api/v1/universities",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "universities"
+                  ]
+                }
+              }
+            }
+          ]
+        },
+        {
+          "name": "Ubicaciones",
+          "item": [
+            {
+              "name": "Listar ubicaciones",
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl}}/api/v1/locations",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "locations"
+                  ]
+                }
+              }
+            },
+            {
+              "name": "Filtrar por distrito",
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl}}/api/v1/locations?district=Miraflores",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "locations"
+                  ],
+                  "query": [
+                    {
+                      "key": "district",
+                      "value": "Miraflores"
+                    }
+                  ]
+                }
+              }
+            },
+            {
+              "name": "Crear ubicación",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"district\": \"Miraflores\",\n  \"address\": \"Av. Larco 100\",\n  \"latitude\": -12.1211,\n  \"longitude\": -77.0297,\n  \"distanceToUniversityKm\": 2.5\n}"
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/api/v1/locations",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "locations"
+                  ]
+                }
+              }
+            }
+          ]
+        },
+        {
+          "name": "Habitaciones",
+          "item": [
+            {
+              "name": "Buscar habitaciones",
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl}}/api/v1/rooms?page=0&size=20&sortBy=price",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "rooms"
+                  ],
+                  "query": [
+                    {
+                      "key": "page",
+                      "value": "0"
+                    },
+                    {
+                      "key": "size",
+                      "value": "20"
+                    },
+                    {
+                      "key": "sortBy",
+                      "value": "price"
+                    }
+                  ]
+                }
+              }
+            },
+            {
+              "name": "Buscar habitaciones con filtros",
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl}}/api/v1/rooms?minPrice=500&maxPrice=1500&district=Miraflores&universityId={{universityId}}&page=0&size=10",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "rooms"
+                  ],
+                  "query": [
+                    {
+                      "key": "minPrice",
+                      "value": "500"
+                    },
+                    {
+                      "key": "maxPrice",
+                      "value": "1500"
+                    },
+                    {
+                      "key": "district",
+                      "value": "Miraflores"
+                    },
+                    {
+                      "key": "universityId",
+                      "value": "{{universityId}}"
+                    },
+                    {
+                      "key": "page",
+                      "value": "0"
+                    },
+                    {
+                      "key": "size",
+                      "value": "10"
+                    }
+                  ]
+                }
+              }
+            },
+            {
+              "name": "Obtener habitación",
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl}}/api/v1/rooms/{{roomId}}",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "rooms",
+                    "{{roomId}}"
+                  ]
+                }
+              }
+            }
+          ]
+        },
+        {
+          "name": "Habitaciones del landlord",
+          "item": [
+            {
+              "name": "Listar habitaciones del landlord",
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl}}/api/v1/landlords/{{landlordId}}/rooms?page=0&size=20",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "landlords",
+                    "{{landlordId}}",
+                    "rooms"
+                  ],
+                  "query": [
+                    {
+                      "key": "page",
+                      "value": "0"
+                    },
+                    {
+                      "key": "size",
+                      "value": "20"
+                    }
+                  ]
+                }
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Trust Flow",
+      "item": [
+        {
+          "name": "Solicitudes de alquiler",
+          "item": [
+            {
+              "name": "Crear solicitud",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{}"
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/api/v1/rooms/{{roomId}}/rental-requests",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "rooms",
+                    "{{roomId}}",
+                    "rental-requests"
+                  ]
+                }
+              }
+            },
+            {
+              "name": "Mis solicitudes",
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl}}/api/v1/my-rental-requests",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "my-rental-requests"
+                  ]
+                }
+              }
+            },
+            {
+              "name": "Solicitudes del landlord",
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl}}/api/v1/my-requests-landlord",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "my-requests-landlord"
+                  ]
+                }
+              }
+            }
+          ]
+        },
+        {
+          "name": "Visitas",
+          "item": [
+            {
+              "name": "Crear visita",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{}"
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/api/v1/rental-requests/{{rentalRequestId}}/visits",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "rental-requests",
+                    "{{rentalRequestId}}",
+                    "visits"
+                  ]
+                }
+              }
+            },
+            {
+              "name": "Listar visitas",
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl}}/api/v1/rental-requests/{{rentalRequestId}}/visits",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "rental-requests",
+                    "{{rentalRequestId}}",
+                    "visits"
+                  ]
+                }
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Publicaciones",
+      "item": [
+        {
+          "name": "Publicar habitación",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/my-rooms/{{roomId}}/publish",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "my-rooms",
+                "{{roomId}}",
+                "publish"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Archivar habitación",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/my-rooms/{{roomId}}/archive",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "my-rooms",
+                "{{roomId}}",
+                "archive"
+              ]
+            }
+          }
+        }
+      ]
+    }
+  ]
+}
