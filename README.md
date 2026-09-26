@@ -7,11 +7,11 @@
 
 ## Integrantes
 
-| Área | GitHub | Responsabilidad |
+| Área | Nombres | Responsabilidad |
 |---|---|---|
-| A | [@MiguelAngelDominguez](https://github.com/MiguelAngelDominguez) | Fundación, seguridad, autenticación y usuarios |
-| B | [@andremejia-hub](https://github.com/andremejia-hub) | Catálogo, habitaciones, ubicaciones y búsqueda |
-| C | [@iygt8-iterate](https://github.com/iygt8-iterate) | Confianza, solicitudes, visitas, reseñas, verificación, eventos y correo |
+| A | [Miguel Angel Dominguez Valentin](https://github.com/MiguelAngelDominguez) | Fundación, seguridad, autenticación y usuarios |
+| B | [André Brando Mejía Vega](https://github.com/andremejia-hub) | Catálogo, habitaciones, ubicaciones y búsqueda |
+| C | [Iker Yazíd García Tapia](https://github.com/iygt8-iterate) | Confianza, solicitudes, visitas, reseñas, verificación, eventos y correo |
 
 ---
 
