@@ -1,6 +1,7 @@
 package com.quedate.config;
 
 import com.quedate.entity.Landlord;
+import com.quedate.entity.Location;
 import com.quedate.entity.Role;
 import com.quedate.entity.Room;
 import com.quedate.entity.RoomStatus;
@@ -8,6 +9,7 @@ import com.quedate.entity.University;
 import com.quedate.entity.User;
 import com.quedate.entity.enums.RoleName;
 import com.quedate.repository.LandlordRepository;
+import com.quedate.repository.LocationRepository;
 import com.quedate.repository.RoleRepository;
 import com.quedate.repository.RoomRepository;
 import com.quedate.repository.UniversityRepository;
@@ -27,6 +29,7 @@ public class DataSeeder implements CommandLineRunner {
     private final LandlordRepository landlordRepository;
     private final UniversityRepository universityRepository;
     private final RoomRepository roomRepository;
+    private final LocationRepository locationRepository;
     private final PasswordEncoder passwordEncoder;
 
     public DataSeeder(
@@ -35,6 +38,7 @@ public class DataSeeder implements CommandLineRunner {
             LandlordRepository landlordRepository,
             UniversityRepository universityRepository,
             RoomRepository roomRepository,
+            LocationRepository locationRepository,
             PasswordEncoder passwordEncoder
     ) {
         this.roleRepository = roleRepository;
@@ -42,6 +46,7 @@ public class DataSeeder implements CommandLineRunner {
         this.landlordRepository = landlordRepository;
         this.universityRepository = universityRepository;
         this.roomRepository = roomRepository;
+        this.locationRepository = locationRepository;
         this.passwordEncoder = passwordEncoder;
     }
 
@@ -137,6 +142,7 @@ public class DataSeeder implements CommandLineRunner {
         room1.setVerified(true);
         room1.setOwner(owner);
         room1.setUniversity(utec);
+        room1.setLocation(seedBarrancoLocation());
         roomRepository.save(room1);
 
         Room room2 = new Room();
@@ -149,6 +155,22 @@ public class DataSeeder implements CommandLineRunner {
         room2.setVerified(true);
         room2.setOwner(owner);
         room2.setUniversity(utec);
+        room2.setLocation(seedBarrancoLocation());
         roomRepository.save(room2);
+    }
+
+    private Location seedBarrancoLocation() {
+        return locationRepository.findByDistrictIgnoreCase("Barranco")
+                .stream()
+                .findFirst()
+                .orElseGet(() -> {
+                    Location barranco = new Location();
+                    barranco.setDistrict("Barranco");
+                    barranco.setAddress("Jr. Medrano Silva 165, Barranco, Lima 15063");
+                    barranco.setLatitude(-12.1469);
+                    barranco.setLongitude(-77.0225);
+                    barranco.setDistanceToUniversityKm(1.2);
+                    return locationRepository.save(barranco);
+                });
     }
 }
