@@ -49,7 +49,8 @@
 
 ### §6 API REST y Controllers (2.0) ✅
 - **Requisito:** `/api/v1/...`, verbos correctos, códigos 200/201/204/400/401/403/404/409/500.
-- **Evidencia:** 30+ endpoints bajo `/api/v1`. **Gates funcionales:** M2 **24/24 PASS** (`gate_m2.ps1`: CRUD 200/204/404, publish 201, my-rooms 200, negativos 403) · M3 **24/24 PASS** (`gate_m3.ps1`: rental 201/409, confirm 200, visits 201/200, review 201/409, verification 201/200, rating 200). 
+- **Evidencia:** 30+ endpoints bajo `/api/v1`. **Gates funcionales:** M2 **24/24 PASS** (`gate_m2.ps1`: CRUD 200/204/404, publish 201, my-rooms 200, negativos 403) · M3 **24/24 PASS** (`gate_m3.ps1`: rental 201/409, confirm 200, visits 201/200, review 201/409, verification 201/200, rating 200).
+- **Smoke end-to-end final:** **45/45 PASS** en `localhost` y LAN `192.168.18.9` (`smoke.ps1`): register/login/refresh, users/me GET+PUT, landlord profile, catálogo, rooms CRUD + filtros + publish + DELETE, rental-requests, visits, reviews, rating, verificación (admin) y negativos 401/403. Log: `%TEMP%\opencode\smoke_final.log`.
 - **Issues/PRs:** #18–#22, #26–#32 → PR #49–#67, #87–#90.
 
 ### §7 Eventos y Asincronía (2.0) ✅
@@ -64,7 +65,8 @@
 
 ### §9 GitHub y Documentación (1.0) ✅
 - **Requisito:** GitFlow + PRs + Issues/Projects · README · postman_collection.json.
-- **Evidencia:** `main` + `develop` (rama de trabajo); **30+ PRs** mergeados con base `develop` (incl. fixes #87–#91); cada issue vinculado a su PR y cerrado con evidencia; **36 de 39 issues cerrados** (3 = out-of-scope/pendiente documentado: #34); **milestones M0–M4 cerrados** (#7–#11); `README.md` (raíz, 11 secciones, PR #68); `postman_collection.json` (raíz, variables + auth heredada, PR #60). Informe de verificación: `docs/VERIFICACION_M0_M1.md`.
+- **Evidencia:** `main` + `develop` (rama de trabajo); **57+ PRs** mergeados con base `develop` (incl. fixes #87–#91, postman #96, README #97); cada issue vinculado a su PR y cerrado con evidencia; **39/39 issues cerrados** (solo #34 = out-of-scope documentado, AWS); **6/6 milestones M0–M5 cerrados** (#7–#12); `README.md` (15 secciones, 1940 palabras, PR #96/#97 — alineado a la rúbrica); `postman_collection.json` (38 requests, 6 grupos, 11 variables, auth bearer heredada, PR #96). Informes: `docs/CHECKLIST_RUBRICA.md` (este), `docs/VERIFICACION_M2_M5.md`.
+- **Release:** PR #64 `develop → main` listo para el entregable final (revisión pendiente).
 
 ---
 
@@ -77,15 +79,17 @@
 | M2 Catálogo (#14–#22) | rooms + publicaciones | ✅ Iss. #14–#22 · milestone #9 cerrado · gate 24/24 |
 | M3 Confianza (#23–#32) | rental/visitas/reviews/verificación | ✅ Iss. #23–#32 · milestone #10 cerrado · gate 24/24 |
 | M4 Integración (#33–#35) | eventos+email (#33) · AWS (#34) · Docker (#35) | ⚠️ #33/#35 ✅ · #34 out-of-scope · milestone #11 cerrado |
-| M5 Docs/QA (#36–#39) | postman/README/checklist/test | ✅ Iss. #36–#39 · milestone #12 cerrado |
+| M5 Docs/QA (#36–#39) | postman 38 req · README 15 sec · checklist · tests 32 | ✅ Iss. #36–#39 · milestone #12 cerrado · PR #96/#97/#93/#94/#95 |
 
 ## Bonus entregados
 - ✅ **Docker Compose** (#35) → PR #92.
 - ✅ **Tests unitarios > por dominio** (#39) → PR #93: 6 suites Mockito (Room, Publication, RentalRequest, Visit, Review, Verification), `mvn test` = **32 tests / 0 failures**.
-- ✅ **Documentación rúbrica** (#38) → este archivo.
+- ✅ **Documentación rúbrica** (#38) → este archivo (actualizado al cierre, 25/09).
+- ✅ **Smoke end-to-end** → 45/45 checks localhost + LAN (GET/POST/PUT/PATCH/DELETE + auth + negativos).
 
 ## Cómo reprobar la evidencia
 1. `mvn clean test` → 32 tests verdes (PR #93).
 2. Arrancar `mvn spring-boot:run` y correr los gates `%TEMP%\opencode\gate_m2.ps1` / `gate_m3.ps1` → 24/24 cada uno.
-3. `docker compose up` (si hay Docker) → app + postgres listos (PR #92).
-4. Revisar tablero de Issues/Projects y PRs cerrados con evidencia por hito.
+3. Correr `%TEMP%\opencode\smoke.ps1` → 45/45 (localhost + LAN) e `mvn test` en CI local.
+4. `docker compose up` (si hay Docker) → app + postgres listos (PR #92).
+5. Revisar tablero de Issues/Projects y PRs cerrados con evidencia por hito.
