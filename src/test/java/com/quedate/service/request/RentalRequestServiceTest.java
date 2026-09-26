@@ -107,7 +107,7 @@ class RentalRequestServiceTest {
 
     @Test
     void create_rejectsUnavailableRoom() {
-        room.setStatus(RoomStatus.RESERVED);
+        room.setStatus(RoomStatus.RENTED);
         RentalRequestCreateDTO dto = new RentalRequestCreateDTO();
 
         when(studentRepository.findByUserId(3L)).thenReturn(Optional.of(studentEntity));
