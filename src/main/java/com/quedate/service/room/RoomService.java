@@ -15,6 +15,7 @@ import com.quedate.exception.InvalidOperationException;
 import com.quedate.exception.ResourceNotFoundException;
 import com.quedate.repository.LandlordRepository;
 import com.quedate.repository.LocationRepository;
+import com.quedate.repository.PublicationRepository;
 import com.quedate.repository.RoomRepository;
 import com.quedate.repository.UniversityRepository;
 import com.quedate.security.UserPrincipal;
@@ -33,17 +34,20 @@ public class RoomService {
     private final LandlordRepository landlordRepository;
     private final UniversityRepository universityRepository;
     private final LocationRepository locationRepository;
+    private final PublicationRepository publicationRepository;
 
     public RoomService(
             RoomRepository roomRepository,
             LandlordRepository landlordRepository,
             UniversityRepository universityRepository,
-            LocationRepository locationRepository
+            LocationRepository locationRepository,
+            PublicationRepository publicationRepository
     ) {
         this.roomRepository = roomRepository;
         this.landlordRepository = landlordRepository;
         this.universityRepository = universityRepository;
         this.locationRepository = locationRepository;
+        this.publicationRepository = publicationRepository;
     }
 
     @Transactional(readOnly = true)
@@ -147,6 +151,7 @@ public class RoomService {
     @Transactional
     public void delete(Long id, UserPrincipal principal) {
         Room room = loadOwnedRoom(id, principal);
+        publicationRepository.deleteByRoom_Id(id);
         roomRepository.delete(room);
     }
 
