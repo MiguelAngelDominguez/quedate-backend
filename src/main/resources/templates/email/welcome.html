@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Bienvenido a Quédate</title>
+</head>
+<body>
+<h1>Bienvenido a Quédate</h1>
+
+<p>
+    Tu cuenta ha sido creada correctamente.
+</p>
+
+<p th:if="${user != null}">
+    Gracias por registrarte,
+    <span th:text="${user.firstName}">usuario</span>.
+</p>
+</body>
+</html>
