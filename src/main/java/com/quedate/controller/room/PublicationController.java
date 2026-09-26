@@ -1,6 +1,6 @@
 package com.quedate.controller.room;
 
-import com.quedate.entity.Publication;
+import com.quedate.dto.room.PublicationResponseDTO;
 import com.quedate.security.UserPrincipal;
 import com.quedate.service.room.PublicationService;
 import org.springframework.http.HttpStatus;
@@ -21,7 +21,7 @@ public class PublicationController {
     @PostMapping("/{id}/publish")
     @ResponseStatus(HttpStatus.CREATED)
     @PreAuthorize("hasAnyRole('LANDLORD', 'ADMIN')")
-    public Publication publish(
+    public PublicationResponseDTO publish(
             @PathVariable Long id,
             @AuthenticationPrincipal UserPrincipal principal
     ) {
@@ -30,7 +30,7 @@ public class PublicationController {
 
     @PostMapping("/{id}/archive")
     @PreAuthorize("hasAnyRole('LANDLORD', 'ADMIN')")
-    public Publication archive(
+    public PublicationResponseDTO archive(
             @PathVariable Long id,
             @AuthenticationPrincipal UserPrincipal principal
     ) {
