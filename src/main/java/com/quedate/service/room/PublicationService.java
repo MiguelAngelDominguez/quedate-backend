@@ -1,5 +1,6 @@
 package com.quedate.service.room;
 
+import com.quedate.dto.room.PublicationResponseDTO;
 import com.quedate.entity.Publication;
 import com.quedate.entity.PublicationStatus;
 import com.quedate.entity.Room;
@@ -9,6 +10,7 @@ import com.quedate.repository.PublicationRepository;
 import com.quedate.repository.RoomRepository;
 import com.quedate.security.UserPrincipal;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 
@@ -26,7 +28,8 @@ public class PublicationService {
         this.roomRepository = roomRepository;
     }
 
-    public Publication publish(Long roomId, UserPrincipal principal) {
+    @Transactional
+    public PublicationResponseDTO publish(Long roomId, UserPrincipal principal) {
         Room room = roomRepository.findById(roomId)
                 .orElseThrow(() -> new ResourceNotFoundException("Room not found: " + roomId));
 
@@ -41,10 +44,11 @@ public class PublicationService {
         publication.setPublishedAt(LocalDateTime.now());
         publication.setArchivedAt(null);
 
-        return publicationRepository.save(publication);
+        return toDTO(publicationRepository.save(publication));
     }
 
-    public Publication archive(Long roomId, UserPrincipal principal) {
+    @Transactional
+    public PublicationResponseDTO archive(Long roomId, UserPrincipal principal) {
         Publication publication = publicationRepository
                 .findByRoom_Id(roomId)
                 .orElseThrow(() -> new ResourceNotFoundException("Publication not found: " + roomId));
@@ -54,7 +58,20 @@ public class PublicationService {
         publication.setStatus(PublicationStatus.ARCHIVED);
         publication.setArchivedAt(LocalDateTime.now());
 
-        return publicationRepository.save(publication);
+        return toDTO(publicationRepository.save(publication));
+    }
+
+    private PublicationResponseDTO toDTO(Publication publication) {
+        Room room = publication.getRoom();
+
+        return PublicationResponseDTO.builder()
+                .id(publication.getId())
+                .roomId(room.getId())
+                .roomTitle(room.getTitle())
+                .status(publication.getStatus())
+                .publishedAt(publication.getPublishedAt())
+                .archivedAt(publication.getArchivedAt())
+                .build();
     }
 
     private void requireOwnerOrAdmin(Room room, UserPrincipal principal) {
