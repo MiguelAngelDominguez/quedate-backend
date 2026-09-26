@@ -2,7 +2,7 @@
   "info": {
     "_postman_id": "quedate-api-collection",
     "name": "Quedate API",
-    "description": "Colección Postman para probar los endpoints de Quedate.",
+    "description": "Colección Postman completa para el backend de Quedate: autenticación, usuarios, catálogo (universidades, ubicaciones, habitaciones), publicaciones, trust flow (solicitudes de alquiler, visitas, reseñas, verificación) y administración.\n\n- Base: {{baseUrl}} (por defecto http://localhost:8080).\n- Autenticación heredada a nivel de colección: Bearer {{token}}.\n- Flujo sugerido: 1) registrar usuario en Autenticación → 2) login → el token se debe copiar a la variable {{token}} → 3) operar el resto.\n- Variables dinámicas: {{roomId}}, {{landlordId}}, {{universityId}}, {{locationId}}, {{rentalRequestId}}, {{visitId}}, {{verificationId}}, {{studentId}}, {{refreshToken}}.",
     "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
   },
   "variable": [
@@ -15,11 +15,19 @@
       "value": ""
     },
     {
+      "key": "refreshToken",
+      "value": ""
+    },
+    {
       "key": "roomId",
       "value": "1"
     },
     {
       "key": "landlordId",
+      "value": "1"
+    },
+    {
+      "key": "studentId",
       "value": "1"
     },
     {
@@ -32,6 +40,14 @@
     },
     {
       "key": "rentalRequestId",
+      "value": "1"
+    },
+    {
+      "key": "visitId",
+      "value": "1"
+    },
+    {
+      "key": "verificationId",
       "value": "1"
     }
   ],
@@ -46,6 +62,242 @@
     ]
   },
   "item": [
+    {
+      "name": "Autenticación",
+      "item": [
+        {
+          "name": "Registrar estudiante",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"firstName\": \"Ana\",\n  \"lastName\": \"Pérez\",\n  \"email\": \"ana2@quedate.com\",\n  \"password\": \"Demo123!\",\n  \"phone\": \"+51 999 111 222\",\n  \"role\": \"USER\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/auth/register",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "auth",
+                "register"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Registrar arrendador",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"firstName\": \"Luis\",\n  \"lastName\": \"Domínguez\",\n  \"email\": \"luis2@quedate.com\",\n  \"password\": \"Demo123!\",\n  \"phone\": \"+51 999 333 444\",\n  \"role\": \"LANDLORD\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/auth/register",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "auth",
+                "register"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Login",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"admin@quedate.com\",\n  \"password\": \"Admin123!\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/auth/login",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "auth",
+                "login"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Refresh token",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"refreshToken\": \"{{refreshToken}}\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/auth/refresh",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "auth",
+                "refresh"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Usuarios y perfiles",
+      "item": [
+        {
+          "name": "Mi usuario",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/users/me",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "users",
+                "me"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Actualizar mi usuario",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"firstName\": \"Ana\",\n  \"lastName\": \"Pérez\",\n  \"phone\": \"+51 999 111 222\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/users/me",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "users",
+                "me"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Actualizar perfil de arrendador",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"dni\": \"71234567\",\n  \"bio\": \"Arrendador verificado en Barranco\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/landlords/me/profile",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "landlords",
+                "me",
+                "profile"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Obtener estudiante",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/students/{{studentId}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "students",
+                "{{studentId}}"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Listar usuarios (admin)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/admin/users",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "admin",
+                "users"
+              ]
+            }
+          }
+        }
+      ]
+    },
     {
       "name": "Catálogo",
       "item": [
@@ -289,14 +541,9 @@
                   ]
                 }
               }
-            }
-          ]
-        },
-        {
-          "name": "Habitaciones del landlord",
-          "item": [
+            },
             {
-              "name": "Listar habitaciones del landlord",
+              "name": "Habitaciones del landlord (público)",
               "request": {
                 "method": "GET",
                 "header": [],
@@ -330,6 +577,159 @@
       ]
     },
     {
+      "name": "Gestión de habitaciones (landlord/admin)",
+      "item": [
+        {
+          "name": "Crear habitación",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"title\": \"Habitación moderna en Barranco\",\n  \"description\": \"Cuarto con baño privado y balcón\",\n  \"price\": 550,\n  \"capacity\": 1,\n  \"sizeM2\": 18,\n  \"images\": [\"https://img.quedate.com/room1.jpg\"],\n  \"locationId\": 1,\n  \"universityId\": 1\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/rooms",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "rooms"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Actualizar habitación",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"title\": \"Habitación moderna en Barranco (renovada)\",\n  \"description\": \"Cuarto con baño privado y balcón\",\n  \"price\": 580,\n  \"capacity\": 1,\n  \"sizeM2\": 18,\n  \"images\": [\"https://img.quedate.com/room1.jpg\"],\n  \"locationId\": 1,\n  \"universityId\": 1,\n  \"status\": \"AVAILABLE\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/rooms/{{roomId}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "rooms",
+                "{{roomId}}"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Eliminar habitación",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/rooms/{{roomId}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "rooms",
+                "{{roomId}}"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Mis habitaciones",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/rooms/my-rooms?page=0&size=20",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "rooms",
+                "my-rooms"
+              ],
+              "query": [
+                {
+                  "key": "page",
+                  "value": "0"
+                },
+                {
+                  "key": "size",
+                  "value": "20"
+                }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Publicaciones",
+      "item": [
+        {
+          "name": "Publicar habitación",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/my-rooms/{{roomId}}/publish",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "my-rooms",
+                "{{roomId}}",
+                "publish"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Archivar habitación",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/my-rooms/{{roomId}}/archive",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "my-rooms",
+                "{{roomId}}",
+                "archive"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
       "name": "Trust Flow",
       "item": [
         {
@@ -347,7 +747,7 @@
                 ],
                 "body": {
                   "mode": "raw",
-                  "raw": "{}"
+                  "raw": "{\n  \"message\": \"Hola, me interesa el cuarto\",\n  \"startDate\": \"2026-10-01\",\n  \"endDate\": \"2027-03-01\"\n}"
                 },
                 "url": {
                   "raw": "{{baseUrl}}/api/v1/rooms/{{roomId}}/rental-requests",
@@ -399,6 +799,35 @@
                   ]
                 }
               }
+            },
+            {
+              "name": "Actualizar estado de solicitud",
+              "request": {
+                "method": "PATCH",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"status\": \"CONFIRMED\"\n}"
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/api/v1/rental-requests/{{rentalRequestId}}/status",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "rental-requests",
+                    "{{rentalRequestId}}",
+                    "status"
+                  ]
+                }
+              }
             }
           ]
         },
@@ -406,7 +835,7 @@
           "name": "Visitas",
           "item": [
             {
-              "name": "Crear visita",
+              "name": "Agendar visita",
               "request": {
                 "method": "POST",
                 "header": [
@@ -417,7 +846,7 @@
                 ],
                 "body": {
                   "mode": "raw",
-                  "raw": "{}"
+                  "raw": "{\n  \"scheduledAt\": \"2026-10-05T15:00:00\",\n  \"notes\": \"Primera visita\"\n}"
                 },
                 "url": {
                   "raw": "{{baseUrl}}/api/v1/rental-requests/{{rentalRequestId}}/visits",
@@ -435,7 +864,7 @@
               }
             },
             {
-              "name": "Listar visitas",
+              "name": "Listar visitas de una solicitud",
               "request": {
                 "method": "GET",
                 "header": [],
@@ -453,53 +882,191 @@
                   ]
                 }
               }
+            },
+            {
+              "name": "Actualizar estado de visita",
+              "request": {
+                "method": "PATCH",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"status\": \"COMPLETED\"\n}"
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/api/v1/visits/{{visitId}}/status",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "visits",
+                    "{{visitId}}",
+                    "status"
+                  ]
+                }
+              }
             }
           ]
-        }
-      ]
-    },
-    {
-      "name": "Publicaciones",
-      "item": [
-        {
-          "name": "Publicar habitación",
-          "request": {
-            "method": "POST",
-            "header": [],
-            "url": {
-              "raw": "{{baseUrl}}/api/v1/my-rooms/{{roomId}}/publish",
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "path": [
-                "api",
-                "v1",
-                "my-rooms",
-                "{{roomId}}",
-                "publish"
-              ]
-            }
-          }
         },
         {
-          "name": "Archivar habitación",
-          "request": {
-            "method": "POST",
-            "header": [],
-            "url": {
-              "raw": "{{baseUrl}}/api/v1/my-rooms/{{roomId}}/archive",
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "path": [
-                "api",
-                "v1",
-                "my-rooms",
-                "{{roomId}}",
-                "archive"
-              ]
+          "name": "Reseñas y rating",
+          "item": [
+            {
+              "name": "Crear reseña",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"rating\": 5,\n  \"comment\": \"Excelente experiencia, todo tal cual.\"\n}"
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/api/v1/rooms/{{roomId}}/reviews",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "rooms",
+                    "{{roomId}}",
+                    "reviews"
+                  ]
+                }
+              }
+            },
+            {
+              "name": "Reseñas de una habitación",
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl}}/api/v1/rooms/{{roomId}}/reviews",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "rooms",
+                    "{{roomId}}",
+                    "reviews"
+                  ]
+                }
+              }
+            },
+            {
+              "name": "Rating de un landlord",
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl}}/api/v1/landlords/{{landlordId}}/rating",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "landlords",
+                    "{{landlordId}}",
+                    "rating"
+                  ]
+                }
+              }
             }
-          }
+          ]
+        },
+        {
+          "name": "Verificación",
+          "item": [
+            {
+              "name": "Solicitar verificación de identidad",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"type\": \"DNI\",\n  \"documentReference\": \"DNI-71234567\"\n}"
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/api/v1/me/verification",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "me",
+                    "verification"
+                  ]
+                }
+              }
+            },
+            {
+              "name": "Verificaciones pendientes (admin)",
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl}}/api/v1/verifications/pending",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "verifications",
+                    "pending"
+                  ]
+                }
+              }
+            },
+            {
+              "name": "Decidir verificación (admin)",
+              "request": {
+                "method": "PATCH",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"status\": \"APPROVED\"\n}"
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/api/v1/verifications/{{verificationId}}",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "verifications",
+                    "{{verificationId}}"
+                  ]
+                }
+              }
+            }
+          ]
         }
       ]
     }
