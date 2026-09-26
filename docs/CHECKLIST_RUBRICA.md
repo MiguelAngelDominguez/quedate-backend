@@ -50,7 +50,8 @@
 ### §6 API REST y Controllers (2.0) ✅
 - **Requisito:** `/api/v1/...`, verbos correctos, códigos 200/201/204/400/401/403/404/409/500.
 - **Evidencia:** 30+ endpoints bajo `/api/v1`. **Gates funcionales:** M2 **24/24 PASS** (`gate_m2.ps1`: CRUD 200/204/404, publish 201, my-rooms 200, negativos 403) · M3 **24/24 PASS** (`gate_m3.ps1`: rental 201/409, confirm 200, visits 201/200, review 201/409, verification 201/200, rating 200).
-- **Smoke end-to-end final:** **45/45 PASS** en `localhost` y LAN `192.168.18.9` (`smoke.ps1`): register/login/refresh, users/me GET+PUT, landlord profile, catálogo, rooms CRUD + filtros + publish + DELETE, rental-requests, visits, reviews, rating, verificación (admin) y negativos 401/403. Log: `%TEMP%\opencode\smoke_final.log`.
+- **Smoke end-to-end final:** **49/49 PASS** en `localhost` y LAN `192.168.18.9` (`smoke.ps1`): register/login/refresh, users/me GET+PUT, students/{id}, landlord profile, catálogo, rooms CRUD + filtros + publish + DELETE, rental-requests (CONFIRMED y CANCELLED), visits, reviews, rating, verificación (admin) y negativos 401/403. Log: `%TEMP%\opencode\smoke_final.log`.
+- **Swagger UI:** `/v3/api-docs` → 200 (OpenAPI 3.1.0) y `/swagger-ui/index.html` → 200 en runtime (PR #101, issue #32).
 - **Issues/PRs:** #18–#22, #26–#32 → PR #49–#67, #87–#90.
 
 ### §7 Eventos y Asincronía (2.0) ✅
@@ -66,7 +67,8 @@
 ### §9 GitHub y Documentación (1.0) ✅
 - **Requisito:** GitFlow + PRs + Issues/Projects · README · postman_collection.json.
 - **Evidencia:** `main` + `develop` (rama de trabajo); **57+ PRs** mergeados con base `develop` (incl. fixes #87–#91, postman #96, README #97); cada issue vinculado a su PR y cerrado con evidencia; **39/39 issues cerrados** (solo #34 = out-of-scope documentado, AWS); **6/6 milestones M0–M5 cerrados** (#7–#12); `README.md` (15 secciones, 1940 palabras, PR #96/#97 — alineado a la rúbrica); `postman_collection.json` (38 requests, 6 grupos, 11 variables, auth bearer heredada, PR #96). Informes: `docs/CHECKLIST_RUBRICA.md` (este), `docs/VERIFICACION_M2_M5.md`.
-- **Release:** PR #64 `develop → main` listo para el entregable final (revisión pendiente).
+- **Release:** PR #64 `develop → main` **mergeado** (`5fbb270`, Release v1.0.0); cierre final: release `develop→main` v1.0.1 con Swagger UI + smoke 49/49 + checklist (pendiente de aprobación).
+- **Nota Projects:** la rúbrica §9 menciona *Projects*; se crea un tablero (o se confirma cubierto por milestones) como paso final del cierre (ver sección "Checklist operativo").
 
 ---
 
@@ -85,11 +87,13 @@
 - ✅ **Docker Compose** (#35) → PR #92.
 - ✅ **Tests unitarios > por dominio** (#39) → PR #93: 6 suites Mockito (Room, Publication, RentalRequest, Visit, Review, Verification), `mvn test` = **32 tests / 0 failures**.
 - ✅ **Documentación rúbrica** (#38) → este archivo (actualizado al cierre, 25/09).
-- ✅ **Smoke end-to-end** → 45/45 checks localhost + LAN (GET/POST/PUT/PATCH/DELETE + auth + negativos).
+- ✅ **Smoke end-to-end** → 49/49 checks localhost + LAN (GET/POST/PUT/PATCH/DELETE + auth + negativos).
+- ✅ **Swagger UI** (#32) → springdoc 3.1.0 (PR #101): `/v3/api-docs` y `/swagger-ui/index.html` responden 200.
 
 ## Cómo reprobar la evidencia
 1. `mvn clean test` → 32 tests verdes (PR #93).
 2. Arrancar `mvn spring-boot:run` y correr los gates `%TEMP%\opencode\gate_m2.ps1` / `gate_m3.ps1` → 24/24 cada uno.
-3. Correr `%TEMP%\opencode\smoke.ps1` → 45/45 (localhost + LAN) e `mvn test` en CI local.
-4. `docker compose up` (si hay Docker) → app + postgres listos (PR #92).
-5. Revisar tablero de Issues/Projects y PRs cerrados con evidencia por hito.
+3. Correr `%TEMP%\opencode\smoke.ps1` → 49/49 (localhost + LAN) y `mvn test` en CI local.
+4. Arrancar la app y abrir Swagger UI: `http://localhost:8080/swagger-ui/index.html` (PR #101).
+5. `docker compose up` (si hay Docker) → app + postgres listos (PR #92).
+6. Revisar milestones (#7–#12 cerrados) y PRs cerrados con evidencia por hito (ver §9).
