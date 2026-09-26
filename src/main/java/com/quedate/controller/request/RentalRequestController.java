@@ -3,9 +3,7 @@ package com.quedate.controller.request;
 import com.quedate.dto.request.RentalRequestCreateDTO;
 import com.quedate.dto.request.RentalRequestResponseDTO;
 import com.quedate.dto.request.RequestStatusUpdateDTO;
-import com.quedate.entity.Landlord;
-import com.quedate.entity.Student;
-import com.quedate.entity.User;
+import com.quedate.security.UserPrincipal;
 import com.quedate.service.request.RentalRequestService;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
@@ -29,14 +27,14 @@ public class RentalRequestController {
     }
 
     @PostMapping("/rooms/{roomId}/rental-requests")
-    @PreAuthorize("hasRole('STUDENT')")
+    @PreAuthorize("hasRole('USER')")
     public ResponseEntity<RentalRequestResponseDTO> create(
-            @AuthenticationPrincipal Student student,
+            @AuthenticationPrincipal UserPrincipal principal,
             @PathVariable Long roomId,
             @Valid @RequestBody RentalRequestCreateDTO dto
     ) {
         RentalRequestResponseDTO response =
-                rentalRequestService.create(student, roomId, dto);
+                rentalRequestService.create(principal, roomId, dto);
 
         return ResponseEntity
                 .status(HttpStatus.CREATED)
@@ -44,34 +42,34 @@ public class RentalRequestController {
     }
 
     @GetMapping("/my-rental-requests")
-    @PreAuthorize("hasRole('STUDENT')")
+    @PreAuthorize("hasRole('USER')")
     public ResponseEntity<List<RentalRequestResponseDTO>> getMyRequests(
-            @AuthenticationPrincipal Student student
+            @AuthenticationPrincipal UserPrincipal principal
     ) {
         return ResponseEntity.ok(
-                rentalRequestService.getMyRequests(student)
+                rentalRequestService.getMyRequests(principal)
         );
     }
 
     @GetMapping("/my-requests-landlord")
     @PreAuthorize("hasRole('LANDLORD')")
     public ResponseEntity<List<RentalRequestResponseDTO>> getLandlordRequests(
-            @AuthenticationPrincipal Landlord landlord
+            @AuthenticationPrincipal UserPrincipal principal
     ) {
         return ResponseEntity.ok(
-                rentalRequestService.getLandlordRequests(landlord)
+                rentalRequestService.getLandlordRequests(principal)
         );
     }
 
     @PatchMapping("/rental-requests/{id}/status")
     @PreAuthorize("hasAnyRole('LANDLORD', 'ADMIN')")
     public ResponseEntity<RentalRequestResponseDTO> updateStatus(
-            @AuthenticationPrincipal User actor,
+            @AuthenticationPrincipal UserPrincipal principal,
             @PathVariable Long id,
             @Valid @RequestBody RequestStatusUpdateDTO dto
     ) {
         return ResponseEntity.ok(
-                rentalRequestService.updateStatus(actor, id, dto)
+                rentalRequestService.updateStatus(principal, id, dto)
         );
     }
 }
