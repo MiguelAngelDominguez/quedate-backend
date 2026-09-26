@@ -355,9 +355,9 @@ postman_collection.json       # colección completa (38 requests)
 Dockerfile / docker-compose.yml
 .env.example
 pom.xml
-src/main/resources/application.yml
-src/main/resources/application-dev.yml     # H2 (dev)
-src/main/resources/application-prod.yml    # PostgreSQL (prod)
+src/main/resources/application.yml          # bloques dev y prod (perfil activo: dev)
+src/main/resources/application-dev.yml      # H2 (dev)
+.env.example                                # variables de entorno (DB_URL, JWT_SECRET, SMTP_*, …)
 ```
 
 ### Licencia
