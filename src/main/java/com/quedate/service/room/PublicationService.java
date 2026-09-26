@@ -3,8 +3,11 @@ package com.quedate.service.room;
 import com.quedate.entity.Publication;
 import com.quedate.entity.PublicationStatus;
 import com.quedate.entity.Room;
+import com.quedate.exception.ForbiddenException;
+import com.quedate.exception.ResourceNotFoundException;
 import com.quedate.repository.PublicationRepository;
 import com.quedate.repository.RoomRepository;
+import com.quedate.security.UserPrincipal;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -23,9 +26,11 @@ public class PublicationService {
         this.roomRepository = roomRepository;
     }
 
-    public Publication publish(Long roomId) {
+    public Publication publish(Long roomId, UserPrincipal principal) {
         Room room = roomRepository.findById(roomId)
-                .orElseThrow(() -> new RuntimeException("Room not found"));
+                .orElseThrow(() -> new ResourceNotFoundException("Room not found: " + roomId));
+
+        requireOwnerOrAdmin(room, principal);
 
         Publication publication = publicationRepository
                 .findByRoom_Id(roomId)
@@ -39,14 +44,29 @@ public class PublicationService {
         return publicationRepository.save(publication);
     }
 
-    public Publication archive(Long roomId) {
+    public Publication archive(Long roomId, UserPrincipal principal) {
         Publication publication = publicationRepository
                 .findByRoom_Id(roomId)
-                .orElseThrow(() -> new RuntimeException("Publication not found"));
+                .orElseThrow(() -> new ResourceNotFoundException("Publication not found: " + roomId));
+
+        requireOwnerOrAdmin(publication.getRoom(), principal);
 
         publication.setStatus(PublicationStatus.ARCHIVED);
         publication.setArchivedAt(LocalDateTime.now());
 
         return publicationRepository.save(publication);
+    }
+
+    private void requireOwnerOrAdmin(Room room, UserPrincipal principal) {
+        boolean admin = principal.getAuthorities().stream()
+                .anyMatch(a -> "ROLE_ADMIN".equals(a.getAuthority()));
+
+        boolean owner = room.getOwner() != null
+                && room.getOwner().getUser() != null
+                && room.getOwner().getUser().getId().equals(principal.getUserId());
+
+        if (!admin && !owner) {
+            throw new ForbiddenException("You can only manage your own rooms");
+        }
     }
 }
