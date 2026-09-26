@@ -10,6 +10,7 @@ import com.quedate.entity.enums.VerificationStatus;
 import com.quedate.exception.InvalidOperationException;
 import com.quedate.exception.ResourceNotFoundException;
 import com.quedate.repository.LandlordRepository;
+import com.quedate.repository.UserRepository;
 import com.quedate.repository.VerificationRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -22,13 +23,16 @@ public class VerificationService {
 
     private final VerificationRepository verificationRepository;
     private final LandlordRepository landlordRepository;
+    private final UserRepository userRepository;
 
     public VerificationService(
             VerificationRepository verificationRepository,
-            LandlordRepository landlordRepository
+            LandlordRepository landlordRepository,
+            UserRepository userRepository
     ) {
         this.verificationRepository = verificationRepository;
         this.landlordRepository = landlordRepository;
+        this.userRepository = userRepository;
     }
 
     public VerificationResponseDTO requestLandlordIdentity(
@@ -58,7 +62,7 @@ public class VerificationService {
 
     @Transactional
     public VerificationResponseDTO decide(
-            User admin,
+            Long adminUserId,
             Long id,
             VerificationDecisionDTO dto
     ) {
@@ -75,6 +79,9 @@ public class VerificationService {
                     "Verification decision must be APPROVED or REJECTED"
             );
         }
+
+        User admin = userRepository.findById(adminUserId)
+                .orElseThrow(() -> new ResourceNotFoundException("User not found"));
 
         verification.setStatus(decision);
         verification.setReviewedBy(admin);

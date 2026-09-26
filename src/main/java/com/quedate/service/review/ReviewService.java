@@ -9,12 +9,15 @@ import com.quedate.entity.Student;
 import com.quedate.entity.Visit;
 import com.quedate.entity.enums.RentalRequestStatus;
 import com.quedate.entity.enums.VisitStatus;
+import com.quedate.exception.DuplicateResourceException;
+import com.quedate.exception.ForbiddenException;
 import com.quedate.repository.RentalRequestRepository;
 import com.quedate.repository.ReviewRepository;
+import com.quedate.repository.StudentRepository;
 import com.quedate.repository.VisitRepository;
+import com.quedate.security.UserPrincipal;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.stereotype.Service;
-import com.quedate.exception.DuplicateResourceException;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -25,22 +28,28 @@ public class ReviewService {
     private final ReviewRepository reviewRepository;
     private final RentalRequestRepository rentalRequestRepository;
     private final VisitRepository visitRepository;
+    private final StudentRepository studentRepository;
 
     public ReviewService(
             ReviewRepository reviewRepository,
             RentalRequestRepository rentalRequestRepository,
-            VisitRepository visitRepository
+            VisitRepository visitRepository,
+            StudentRepository studentRepository
     ) {
         this.reviewRepository = reviewRepository;
         this.rentalRequestRepository = rentalRequestRepository;
         this.visitRepository = visitRepository;
+        this.studentRepository = studentRepository;
     }
 
     public ReviewResponseDTO create(
-            Student student,
+            UserPrincipal principal,
             Long roomId,
             ReviewCreateDTO dto
     ) {
+        Student student = studentRepository.findByUserId(principal.getUserId())
+                .orElseThrow(() -> new ForbiddenException("Student profile not found"));
+
         if (reviewRepository.existsByStudent_IdAndRoom_Id(
                 student.getId(),
                 roomId

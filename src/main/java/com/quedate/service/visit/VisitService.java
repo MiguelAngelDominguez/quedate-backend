@@ -4,7 +4,6 @@ import com.quedate.dto.visit.VisitCreateDTO;
 import com.quedate.dto.visit.VisitResponseDTO;
 import com.quedate.dto.visit.VisitStatusUpdateDTO;
 import com.quedate.entity.RentalRequest;
-import com.quedate.entity.User;
 import com.quedate.entity.Visit;
 import com.quedate.entity.enums.RentalRequestStatus;
 import com.quedate.entity.enums.VisitStatus;
@@ -12,6 +11,7 @@ import com.quedate.event.VisitScheduledEvent;
 import com.quedate.exception.InvalidScheduleException;
 import com.quedate.repository.RentalRequestRepository;
 import com.quedate.repository.VisitRepository;
+import com.quedate.security.UserPrincipal;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.stereotype.Service;
@@ -37,7 +37,7 @@ public class VisitService {
     }
 
     public VisitResponseDTO schedule(
-            User actor,
+            UserPrincipal actor,
             Long rentalRequestId,
             VisitCreateDTO dto
     ) {
@@ -70,7 +70,7 @@ public class VisitService {
     }
 
     public VisitResponseDTO updateStatus(
-            User actor,
+            UserPrincipal actor,
             Long visitId,
             VisitStatusUpdateDTO dto
     ) {
@@ -106,7 +106,12 @@ public class VisitService {
          */
         if ((next == VisitStatus.COMPLETED
                 || next == VisitStatus.NO_SHOW)
-                && !request.getStudent().getId().equals(actor.getId())) {
+                && (request.getStudent() == null
+                || request.getStudent().getUser() == null
+                || !request.getStudent()
+                .getUser()
+                .getId()
+                .equals(actor.getUserId()))) {
             throw new AccessDeniedException(
                     "Only the student can complete the visit"
             );
@@ -126,7 +131,7 @@ public class VisitService {
     }
 
     public List<VisitResponseDTO> getByRequest(
-            User actor,
+            UserPrincipal actor,
             Long rentalRequestId
     ) {
         RentalRequest request = rentalRequestRepository.findById(rentalRequestId)
@@ -144,17 +149,26 @@ public class VisitService {
     }
 
     private boolean isActorInvolved(
-            User actor,
+            UserPrincipal actor,
             RentalRequest request
     ) {
         boolean isStudent =
-                request.getStudent().getId().equals(actor.getId());
+                request.getStudent() != null
+                        && request.getStudent().getUser() != null
+                        && request.getStudent()
+                        .getUser()
+                        .getId()
+                        .equals(actor.getUserId());
 
         boolean isLandlord =
-                request.getRoom()
+                request.getRoom() != null
+                        && request.getRoom().getOwner() != null
+                        && request.getRoom().getOwner().getUser() != null
+                        && request.getRoom()
                         .getOwner()
+                        .getUser()
                         .getId()
-                        .equals(actor.getId());
+                        .equals(actor.getUserId());
 
         return isStudent || isLandlord;
     }

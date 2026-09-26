@@ -3,7 +3,7 @@ package com.quedate.controller.review;
 import com.quedate.dto.rating.RatingSummaryDTO;
 import com.quedate.dto.review.ReviewCreateDTO;
 import com.quedate.dto.review.ReviewResponseDTO;
-import com.quedate.entity.Student;
+import com.quedate.security.UserPrincipal;
 import com.quedate.service.review.ReviewService;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
@@ -25,15 +25,15 @@ public class ReviewController {
     }
 
     @PostMapping("/rooms/{roomId}/reviews")
-    @PreAuthorize("hasRole('STUDENT')")
+    @PreAuthorize("hasRole('USER')")
     public ResponseEntity<ReviewResponseDTO> create(
-            @AuthenticationPrincipal Student student,
+            @AuthenticationPrincipal UserPrincipal principal,
             @PathVariable Long roomId,
             @Valid @RequestBody ReviewCreateDTO dto
     ) {
         return ResponseEntity
                 .status(HttpStatus.CREATED)
-                .body(reviewService.create(student, roomId, dto));
+                .body(reviewService.create(principal, roomId, dto));
     }
 
     @GetMapping("/rooms/{roomId}/reviews")
