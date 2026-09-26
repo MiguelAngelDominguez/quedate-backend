@@ -69,7 +69,7 @@ public class RoomService {
     @Transactional(readOnly = true)
     public RoomDetailDTO getById(Long id) {
         Room room = roomRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Room not found"));
+                .orElseThrow(() -> new ResourceNotFoundException("Room not found: " + id));
 
         return toDetailDTO(room);
     }
