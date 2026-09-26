@@ -10,6 +10,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
+
 @Service
 public class RoomService {
 
@@ -85,7 +87,7 @@ public class RoomService {
         dto.setPrice(room.getPrice());
         dto.setCapacity(room.getCapacity());
         dto.setSizeM2(room.getSizeM2());
-        dto.setImages(room.getImages());
+        dto.setImages(new ArrayList<>(room.getImages()));
         dto.setStatus(room.getStatus());
         dto.setVerified(room.isVerified());
 
