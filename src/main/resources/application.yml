@@ -5,6 +5,9 @@ spring:
     active: dev
   jpa:
     open-in-view: false
+  mail:
+    host: ${SMTP_HOST:localhost}
+    port: ${SMTP_PORT:1025}
   jackson:
     default-property-inclusion: non_null
 
