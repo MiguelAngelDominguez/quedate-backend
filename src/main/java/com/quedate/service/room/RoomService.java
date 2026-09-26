@@ -8,6 +8,7 @@ import com.quedate.repository.RoomRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class RoomService {
@@ -18,6 +19,7 @@ public class RoomService {
         this.roomRepository = roomRepository;
     }
 
+    @Transactional(readOnly = true)
     public Page<RoomSummaryDTO> search(
             RoomSearchFilterDTO filter,
             Pageable pageable
@@ -33,6 +35,7 @@ public class RoomService {
         return rooms.map(this::toSummaryDTO);
     }
 
+    @Transactional(readOnly = true)
     public RoomDetailDTO getById(Long id) {
         Room room = roomRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Room not found"));
@@ -40,6 +43,7 @@ public class RoomService {
         return toDetailDTO(room);
     }
 
+    @Transactional(readOnly = true)
     public Page<RoomSummaryDTO> getByLandlord(
             Long landlordId,
             Pageable pageable
