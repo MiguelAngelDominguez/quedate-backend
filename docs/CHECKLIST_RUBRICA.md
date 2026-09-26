@@ -66,7 +66,8 @@
 ### §9 GitHub y Documentación (1.0) ✅
 - **Requisito:** GitFlow + PRs + Issues/Projects · README · postman_collection.json.
 - **Evidencia:** `main` + `develop` (rama de trabajo); **57+ PRs** mergeados con base `develop` (incl. fixes #87–#91, postman #96, README #97); cada issue vinculado a su PR y cerrado con evidencia; **39/39 issues cerrados** (solo #34 = out-of-scope documentado, AWS); **6/6 milestones M0–M5 cerrados** (#7–#12); `README.md` (15 secciones, 1940 palabras, PR #96/#97 — alineado a la rúbrica); `postman_collection.json` (38 requests, 6 grupos, 11 variables, auth bearer heredada, PR #96). Informes: `docs/CHECKLIST_RUBRICA.md` (este), `docs/VERIFICACION_M2_M5.md`.
-- **Release:** PR #64 `develop → main` listo para el entregable final (revisión pendiente).
+- **Release:** PR #64 `develop → main` **mergeado** (`5fbb270`, Release v1.0.0).
+- **Nota Projects:** no existe tablero *Projects* en el repo (ninguno vía API); el avance M0–M5 se gestionó íntegramente con **milestones (6/6 cerrados: #7–#12)** e issues, y queda documentado en este checklist y `docs/VERIFICACION_M2_M5.md`.
 
 ---
 
@@ -92,4 +93,4 @@
 2. Arrancar `mvn spring-boot:run` y correr los gates `%TEMP%\opencode\gate_m2.ps1` / `gate_m3.ps1` → 24/24 cada uno.
 3. Correr `%TEMP%\opencode\smoke.ps1` → 45/45 (localhost + LAN) e `mvn test` en CI local.
 4. `docker compose up` (si hay Docker) → app + postgres listos (PR #92).
-5. Revisar tablero de Issues/Projects y PRs cerrados con evidencia por hito.
+5. Revisar milestones (#7–#12 cerrados) y PRs cerrados con evidencia por hito (no hay tablero Projects; ver §9).
