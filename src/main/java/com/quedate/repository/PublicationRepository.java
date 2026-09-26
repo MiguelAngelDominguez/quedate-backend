@@ -12,4 +12,6 @@ public interface PublicationRepository extends JpaRepository<Publication, Long> 
     Optional<Publication> findByRoom_Id(Long roomId);
 
     List<Publication> findByStatus(PublicationStatus status);
+
+    void deleteByRoom_Id(Long roomId);
 }
