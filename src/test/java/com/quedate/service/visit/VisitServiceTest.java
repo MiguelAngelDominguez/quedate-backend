@@ -77,6 +77,7 @@ class VisitServiceTest {
         room.setOwner(landlord);
 
         request = RentalRequest.builder()
+                .id(5L)
                 .status(RentalRequestStatus.CONFIRMED)
                 .student(student)
                 .room(room)

@@ -11,6 +11,7 @@ import com.quedate.entity.Student;
 import com.quedate.entity.User;
 import com.quedate.entity.enums.RentalRequestStatus;
 import com.quedate.entity.enums.RoleName;
+import com.quedate.event.RentalRequestCreatedEvent;
 import com.quedate.exception.DuplicateResourceException;
 import com.quedate.exception.ForbiddenException;
 import com.quedate.exception.InvalidOperationException;
@@ -102,7 +103,7 @@ class RentalRequestServiceTest {
 
         assertEquals(RentalRequestStatus.PENDING, result.getStatus());
         assertEquals("Interesado", result.getMessage());
-        verify(eventPublisher).publishEvent(any());
+        verify(eventPublisher).publishEvent(any(RentalRequestCreatedEvent.class));
     }
 
     @Test

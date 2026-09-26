@@ -72,7 +72,8 @@ class VerificationServiceTest {
 
     @Test
     void decide_approvedMarksLandlordVerified() {
-        Verification verification = pendingVerification(5L, landlord(1L));
+        Landlord landlord = landlord(1L);
+        Verification verification = pendingVerification(5L, landlord);
         User admin = new User();
         admin.setId(9L);
 
@@ -87,7 +88,8 @@ class VerificationServiceTest {
 
         assertEquals(VerificationStatus.APPROVED, result.getStatus());
         assertEquals(9L, result.getReviewedById());
-        verify(landlordRepository).save(landlord(1L));
+        assertEquals(true, landlord.isVerified());
+        verify(landlordRepository).save(landlord);
     }
 
     @Test
