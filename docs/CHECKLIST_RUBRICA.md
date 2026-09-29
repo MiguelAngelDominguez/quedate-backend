@@ -66,9 +66,9 @@
 
 ### §9 GitHub y Documentación (1.0) ✅
 - **Requisito:** GitFlow + PRs + Issues/Projects · README · postman_collection.json.
-- **Evidencia:** `main` + `develop` (rama de trabajo); **57+ PRs** mergeados con base `develop` (incl. fixes #87–#91, postman #96, README #97); cada issue vinculado a su PR y cerrado con evidencia; **39/39 issues cerrados** (solo #34 = out-of-scope documentado, AWS); **6/6 milestones M0–M5 cerrados** (#7–#12); `README.md` (15 secciones, 1940 palabras, PR #96/#97 — alineado a la rúbrica); `postman_collection.json` (38 requests, 6 grupos, 11 variables, auth bearer heredada, PR #96). Informes: `docs/CHECKLIST_RUBRICA.md` (este), `docs/VERIFICACION_M2_M5.md`.
-- **Release:** PR #64 `develop → main` **mergeado** (`5fbb270`, Release v1.0.0); cierre final: release `develop→main` v1.0.1 con Swagger UI + smoke 49/49 + checklist (pendiente de aprobación).
-- **Nota Projects:** la rúbrica §9 menciona *Projects*; se crea un tablero (o se confirma cubierto por milestones) como paso final del cierre (ver sección "Checklist operativo").
+- **Evidencia:** `main` + `develop` (rama de trabajo); **57+ PRs** mergeados con base `develop` (incl. fixes #87–#91, postman #96, README #97); cada issue vinculado a su PR y cerrado con evidencia; **39/39 issues cerrados** (solo #34 = out-of-scope documentado, AWS); **6/6 milestones M0–M5 cerrados** (#7–#12); `README.md` (15 secciones, 1940 palabras, PR #96/#97 — alineado a la rúbrica); `postman_collection.json` (38 requests, 6 grupos, 11 variables, auth bearer heredada, PR #96); **Tablero Projects v2** con **39/39 tasks** (todos `Done`, agrupado por `Milestone` = columnas M0–M5): https://github.com/users/MiguelAngelDominguez/projects/1. Informes: `docs/CHECKLIST_RUBRICA.md` (este), `docs/VERIFICACION_M2_M5.md`.
+- **Release:** PR #64 `develop → main` **mergeado** (`5fbb270`, Release v1.0.0); **PR #103 `develop→main` mergeado** (`f9f9832`, Release v1.0.1: Swagger UI + smoke 49/49 + checklist). Tags `v1.0.0` (`5fbb270`) y `v1.0.1` (`f9f9832`) creados y pusheados.
+- **Nota Projects:** la rúbrica §9 menciona *Projects*; ✅ cumplido — tablero Projects v2 real con los 39 issues de los hitos M0–M5: https://github.com/users/MiguelAngelDominguez/projects/1.
 
 ---
 
@@ -97,3 +97,4 @@
 4. Arrancar la app y abrir Swagger UI: `http://localhost:8080/swagger-ui/index.html` (PR #101).
 5. `docker compose up` (si hay Docker) → app + postgres listos (PR #92).
 6. Revisar milestones (#7–#12 cerrados) y PRs cerrados con evidencia por hito (ver §9).
+7. Abrir el tablero Projects v2 (`https://github.com/users/MiguelAngelDominguez/projects/1`), agrupar por **Milestone** para ver las columnas M0–M5 con sus 39 tasks completas (`Done`).
