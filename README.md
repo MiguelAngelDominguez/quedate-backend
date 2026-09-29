@@ -3,7 +3,7 @@
 **Curso:** CS 2031 Desarrollo Basado en Plataforma
 **Universidad:** UTEC
 **Ciclo:** 2026-2
-**Deadline:** 25/09/2026 · **Objetivo:** 20/20 según rúbrica (ver `PLAN_ESTRUCTURAL.md`)
+**Deadline:** 25/09/2026 · (ver `PLAN_ESTRUCTURAL.md`)
 
 ## Integrantes
 
