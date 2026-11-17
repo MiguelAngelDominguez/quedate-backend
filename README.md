@@ -311,10 +311,10 @@ La arquitectura de producción contempla:
 ### URL del backend desplegado
 
 ```text
-[PENDIENTE: colocar la URL final correspondiente al issue #34]
+https://quedate-backend.onrender.com
 ```
 
-La URL deberá actualizarse después de finalizar y verificar el deployment definitivo.
+El backend está desplegado en Render (free tier) con PostgreSQL. UptimeRobot mantiene el servicio activo (ping cada 5 min). La URL del frontend es `https://quedate-frontend.vercel.app`.
 
 ---
 
