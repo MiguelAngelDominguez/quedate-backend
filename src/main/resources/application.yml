@@ -51,8 +51,8 @@ spring:
       ddl-auto: update
     defer-datasource-initialization: true
   mail:
-    host: ${SMTP_HOST}
-    port: ${SMTP_PORT}
+    host: ${SMTP_HOST:localhost}
+    port: ${SMTP_PORT:1025}
     username: ${SMTP_USERNAME:}
     password: ${SMTP_PASSWORD:}
     properties:
