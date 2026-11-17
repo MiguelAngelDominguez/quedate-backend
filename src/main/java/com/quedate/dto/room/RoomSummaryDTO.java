@@ -18,4 +18,6 @@ public class RoomSummaryDTO {
     private String district;
     private String universityName;
     private Double distanceKm;
+    private Double latitude;
+    private Double longitude;
 }

@@ -238,6 +238,11 @@ public class RoomService {
             dto.setImage(room.getImages().get(0));
         }
 
+        if (room.getLocation() != null) {
+            dto.setLatitude(room.getLocation().getLatitude());
+            dto.setLongitude(room.getLocation().getLongitude());
+        }
+
         return dto;
     }
 
@@ -265,6 +270,11 @@ public class RoomService {
                         ? room.getUniversity().getName()
                         : null
         );
+
+        if (room.getLocation() != null) {
+            dto.setLatitude(room.getLocation().getLatitude());
+            dto.setLongitude(room.getLocation().getLongitude());
+        }
 
         return dto;
     }
