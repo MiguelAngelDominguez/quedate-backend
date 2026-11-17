@@ -49,6 +49,7 @@ spring:
   jpa:
     hibernate:
       ddl-auto: update
+    defer-datasource-initialization: true
   mail:
     host: ${SMTP_HOST}
     port: ${SMTP_PORT}
@@ -60,9 +61,9 @@ spring:
 
 app:
   mail:
-    enabled: true
+    enabled: ${MAIL_ENABLED:false}
 
 management:
   health:
     mail:
-      enabled: true
+      enabled: ${MAIL_ENABLED:false}
