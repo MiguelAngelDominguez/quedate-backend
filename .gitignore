@@ -28,3 +28,5 @@ Thumbs.db
 
 # Uploads/temp
 uploads/
+# Seed data (duplicate of src/main/resources/data.sql)
+/seed_data.sql
