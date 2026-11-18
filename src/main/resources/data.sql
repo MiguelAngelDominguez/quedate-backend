@@ -5,9 +5,9 @@
 -- ----------------------------------------------------------------------------
 -- Roles
 -- ----------------------------------------------------------------------------
-INSERT INTO roles (id, name) VALUES (1, 'USER') ON CONFLICT (id) DO NOTHING;
-INSERT INTO roles (id, name) VALUES (2, 'LANDLORD') ON CONFLICT (id) DO NOTHING;
-INSERT INTO roles (id, name) VALUES (3, 'ADMIN') ON CONFLICT (id) DO NOTHING;
+INSERT INTO roles (id, name) VALUES (1, 'USER') ON CONFLICT DO NOTHING;
+INSERT INTO roles (id, name) VALUES (2, 'LANDLORD') ON CONFLICT DO NOTHING;
+INSERT INTO roles (id, name) VALUES (3, 'ADMIN') ON CONFLICT DO NOTHING;
 
 -- ----------------------------------------------------------------------------
 -- Users (1 admin + 10 landlords + 5 students)
@@ -29,7 +29,7 @@ INSERT INTO users (id, first_name, last_name, email, password, phone, created_at
 (14, 'Student3', 'Apellido3', 'student3@quedate.com', '$2a$10$hH.xvty1A7IY4S6ALThTLe8RdIu16KHNx4WmmDP8lAhvzhvIRE5Fi', '999000014', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 (15, 'Student4', 'Apellido4', 'student4@quedate.com', '$2a$10$hH.xvty1A7IY4S6ALThTLe8RdIu16KHNx4WmmDP8lAhvzhvIRE5Fi', '999000015', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 (16, 'Student5', 'Apellido5', 'student5@quedate.com', '$2a$10$hH.xvty1A7IY4S6ALThTLe8RdIu16KHNx4WmmDP8lAhvzhvIRE5Fi', '999000016', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)
-ON CONFLICT (id) DO NOTHING;
+ON CONFLICT DO NOTHING;
 
 -- ----------------------------------------------------------------------------
 -- User roles
@@ -65,7 +65,7 @@ INSERT INTO landlords (id, user_id, dni, bio, is_verified, created_at) VALUES
 (8, 9, '40000008', 'Arrendador demo 8 - Surquillo', TRUE, CURRENT_TIMESTAMP),
 (9, 10, '40000009', 'Arrendador demo 9 - Jesús María', FALSE, CURRENT_TIMESTAMP),
 (10, 11, '40000010', 'Arrendador demo 10 - Lince', TRUE, CURRENT_TIMESTAMP)
-ON CONFLICT (id) DO NOTHING;
+ON CONFLICT DO NOTHING;
 
 -- ----------------------------------------------------------------------------
 -- Universities (10 real universities in Lima)
@@ -81,7 +81,7 @@ INSERT INTO universities (id, name, campus_name, address, latitude, longitude, w
 (8, 'UNMSM', 'Ciudad Universitaria', 'Av. Venezuela s/n, Lima 15081', -12.056000, -77.084000, 'https://www.unmsm.edu.pe'),
 (9, 'USMP', 'Campus USMP', 'Av. Tomas Marsano 242, Surquillo, Lima 15048', -12.110000, -77.010000, 'https://www.usmp.edu.pe'),
 (10, 'Universidad del Pacifico', 'Campus UP', 'Av. Salaverry 2020, Jesus Maria, Lima 15076', -12.072000, -77.053000, 'https://www.up.edu.pe')
-ON CONFLICT (id) DO NOTHING;
+ON CONFLICT DO NOTHING;
 
 -- ----------------------------------------------------------------------------
 -- Locations (real districts near each university)
@@ -133,7 +133,7 @@ INSERT INTO locations (id, district, address, latitude, longitude, distance_to_u
 (34, 'San Isidro', 'Av. Javier Prado Oeste 456, San Isidro', -12.0950, -77.0360, 2.5),
 (35, 'Lince', 'Av. Arequipa 1234, Lince', -12.0850, -77.0350, 2.0),
 (36, 'Magdalena', 'Jr. Leon Velarde 789, Magdalena', -12.0880, -77.0700, 2.5)
-ON CONFLICT (id) DO NOTHING;
+ON CONFLICT DO NOTHING;
 
 -- ----------------------------------------------------------------------------
 -- Rooms (real listings near universities)
@@ -319,7 +319,7 @@ INSERT INTO rooms (id, title, description, price, capacity, size_m2, status, is_
 (168, 'Departamento compartido en Lince', 'Habitación en depa de 3 cuartos. Baño compartido, cocina, sala. A 7 min de UP.', 680.00, 1, 14.0, 'AVAILABLE', TRUE, 10, 10, 35, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 (169, 'Cuarto económico en Jesus Maria', 'Habitación básica con cama y closet. Baño y cocina compartidos. Muy cerca de UP.', 450.00, 1, 9.0, 'AVAILABLE', FALSE, 10, 10, 33, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 (170, 'Estudio premium en Jesus Maria (UP)', 'Estudio amoblado con baño privado, kitchenette, balcón. Edificio con seguridad.', 1350.00, 1, 24.0, 'AVAILABLE', TRUE, 10, 10, 33, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)
-ON CONFLICT (id) DO NOTHING;
+ON CONFLICT DO NOTHING;
 
 -- ----------------------------------------------------------------------------
 -- Room images (Unsplash photos of rooms/apartments)
@@ -329,98 +329,98 @@ INSERT INTO room_images (room_id, image) VALUES
 (2, 'https://images.unsplash.com/photo-1505691723518-36a5ac3be353'),
 (3, 'https://images.unsplash.com/photo-1493809842364-78817add7ffb'),
 (4, 'https://images.unsplash.com/photo-1560448204-e02f11c3d0e2'),
-(5, 'https://images.unsplash.com/photo-1555854855-1ff3b8b49a5e'),
+(5, 'https://images.unsplash.com/photo-1556020685-ae41abfc9365'),
 (6, 'https://images.unsplash.com/photo-1560185007-cde436f6a4d0'),
 (7, 'https://images.unsplash.com/photo-1586023492125-27b2c045efd7'),
 (8, 'https://images.unsplash.com/photo-1502672260266-1c1ef2d93688'),
-(9, 'https://images.unsplash.com/photo-1522771739844-6a9a6d99a55d'),
+(9, 'https://images.unsplash.com/photo-1598928506311-c55ded91a20c'),
 (10, 'https://images.unsplash.com/photo-1631049307264-da0ec9d70304'),
 (11, 'https://images.unsplash.com/photo-1560448204-e02f11c3d0e2'),
-(12, 'https://images.unsplash.com/photo-1555854855-1ff3b8b49a5e'),
+(12, 'https://images.unsplash.com/photo-1556020685-ae41abfc9365'),
 (13, 'https://images.unsplash.com/photo-1560185007-cde436f6a4d0'),
 (14, 'https://images.unsplash.com/photo-1586023492125-27b2c045efd7'),
 (15, 'https://images.unsplash.com/photo-1502672260266-1c1ef2d93688'),
-(16, 'https://images.unsplash.com/photo-1522771739844-6a9a6d99a55d'),
+(16, 'https://images.unsplash.com/photo-1598928506311-c55ded91a20c'),
 (17, 'https://images.unsplash.com/photo-1631049307264-da0ec9d70304'),
 (18, 'https://images.unsplash.com/photo-1522708323590-d24dbb6b0267'),
 (19, 'https://images.unsplash.com/photo-1505691723518-36a5ac3be353'),
 (20, 'https://images.unsplash.com/photo-1493809842364-78817add7ffb'),
 (21, 'https://images.unsplash.com/photo-1560448204-e02f11c3d0e2'),
-(22, 'https://images.unsplash.com/photo-1555854855-1ff3b8b49a5e'),
+(22, 'https://images.unsplash.com/photo-1556020685-ae41abfc9365'),
 (23, 'https://images.unsplash.com/photo-1560185007-cde436f6a4d0'),
 (24, 'https://images.unsplash.com/photo-1586023492125-27b2c045efd7'),
 (25, 'https://images.unsplash.com/photo-1502672260266-1c1ef2d93688'),
-(26, 'https://images.unsplash.com/photo-1522771739844-6a9a6d99a55d'),
+(26, 'https://images.unsplash.com/photo-1598928506311-c55ded91a20c'),
 (27, 'https://images.unsplash.com/photo-1631049307264-da0ec9d70304'),
 (28, 'https://images.unsplash.com/photo-1522708323590-d24dbb6b0267'),
 (29, 'https://images.unsplash.com/photo-1505691723518-36a5ac3be353'),
 (30, 'https://images.unsplash.com/photo-1493809842364-78817add7ffb'),
 (31, 'https://images.unsplash.com/photo-1560448204-e02f11c3d0e2'),
-(32, 'https://images.unsplash.com/photo-1555854855-1ff3b8b49a5e'),
+(32, 'https://images.unsplash.com/photo-1556020685-ae41abfc9365'),
 (33, 'https://images.unsplash.com/photo-1560185007-cde436f6a4d0'),
 (34, 'https://images.unsplash.com/photo-1586023492125-27b2c045efd7'),
 (35, 'https://images.unsplash.com/photo-1502672260266-1c1ef2d93688'),
-(36, 'https://images.unsplash.com/photo-1522771739844-6a9a6d99a55d'),
+(36, 'https://images.unsplash.com/photo-1598928506311-c55ded91a20c'),
 (37, 'https://images.unsplash.com/photo-1631049307264-da0ec9d70304'),
 (38, 'https://images.unsplash.com/photo-1522708323590-d24dbb6b0267'),
 (39, 'https://images.unsplash.com/photo-1505691723518-36a5ac3be353'),
 (40, 'https://images.unsplash.com/photo-1493809842364-78817add7ffb'),
 (41, 'https://images.unsplash.com/photo-1560448204-e02f11c3d0e2'),
-(42, 'https://images.unsplash.com/photo-1555854855-1ff3b8b49a5e'),
+(42, 'https://images.unsplash.com/photo-1556020685-ae41abfc9365'),
 (43, 'https://images.unsplash.com/photo-1560185007-cde436f6a4d0'),
 (44, 'https://images.unsplash.com/photo-1586023492125-27b2c045efd7'),
 (45, 'https://images.unsplash.com/photo-1502672260266-1c1ef2d93688'),
-(46, 'https://images.unsplash.com/photo-1522771739844-6a9a6d99a55d'),
+(46, 'https://images.unsplash.com/photo-1598928506311-c55ded91a20c'),
 (47, 'https://images.unsplash.com/photo-1631049307264-da0ec9d70304'),
 (48, 'https://images.unsplash.com/photo-1522708323590-d24dbb6b0267'),
 (49, 'https://images.unsplash.com/photo-1505691723518-36a5ac3be353'),
 (50, 'https://images.unsplash.com/photo-1493809842364-78817add7ffb'),
 (51, 'https://images.unsplash.com/photo-1560448204-e02f11c3d0e2'),
-(52, 'https://images.unsplash.com/photo-1555854855-1ff3b8b49a5e'),
+(52, 'https://images.unsplash.com/photo-1556020685-ae41abfc9365'),
 (53, 'https://images.unsplash.com/photo-1560185007-cde436f6a4d0'),
 (54, 'https://images.unsplash.com/photo-1586023492125-27b2c045efd7'),
 (55, 'https://images.unsplash.com/photo-1502672260266-1c1ef2d93688'),
-(56, 'https://images.unsplash.com/photo-1522771739844-6a9a6d99a55d'),
+(56, 'https://images.unsplash.com/photo-1598928506311-c55ded91a20c'),
 (57, 'https://images.unsplash.com/photo-1631049307264-da0ec9d70304'),
 (58, 'https://images.unsplash.com/photo-1522708323590-d24dbb6b0267'),
 (59, 'https://images.unsplash.com/photo-1505691723518-36a5ac3be353'),
 (60, 'https://images.unsplash.com/photo-1493809842364-78817add7ffb'),
 (61, 'https://images.unsplash.com/photo-1560448204-e02f11c3d0e2'),
-(62, 'https://images.unsplash.com/photo-1555854855-1ff3b8b49a5e'),
+(62, 'https://images.unsplash.com/photo-1556020685-ae41abfc9365'),
 (63, 'https://images.unsplash.com/photo-1560185007-cde436f6a4d0'),
 (64, 'https://images.unsplash.com/photo-1586023492125-27b2c045efd7'),
 (65, 'https://images.unsplash.com/photo-1502672260266-1c1ef2d93688'),
-(66, 'https://images.unsplash.com/photo-1522771739844-6a9a6d99a55d'),
+(66, 'https://images.unsplash.com/photo-1598928506311-c55ded91a20c'),
 (67, 'https://images.unsplash.com/photo-1631049307264-da0ec9d70304'),
 (68, 'https://images.unsplash.com/photo-1522708323590-d24dbb6b0267'),
 (69, 'https://images.unsplash.com/photo-1505691723518-36a5ac3be353'),
 (70, 'https://images.unsplash.com/photo-1493809842364-78817add7ffb'),
 (71, 'https://images.unsplash.com/photo-1560448204-e02f11c3d0e2'),
-(72, 'https://images.unsplash.com/photo-1555854855-1ff3b8b49a5e'),
+(72, 'https://images.unsplash.com/photo-1556020685-ae41abfc9365'),
 (73, 'https://images.unsplash.com/photo-1560185007-cde436f6a4d0'),
 (74, 'https://images.unsplash.com/photo-1586023492125-27b2c045efd7'),
 (75, 'https://images.unsplash.com/photo-1502672260266-1c1ef2d93688'),
-(76, 'https://images.unsplash.com/photo-1522771739844-6a9a6d99a55d'),
+(76, 'https://images.unsplash.com/photo-1598928506311-c55ded91a20c'),
 (77, 'https://images.unsplash.com/photo-1631049307264-da0ec9d70304'),
 (78, 'https://images.unsplash.com/photo-1522708323590-d24dbb6b0267'),
 (79, 'https://images.unsplash.com/photo-1505691723518-36a5ac3be353'),
 (80, 'https://images.unsplash.com/photo-1493809842364-78817add7ffb'),
 (81, 'https://images.unsplash.com/photo-1560448204-e02f11c3d0e2'),
-(82, 'https://images.unsplash.com/photo-1555854855-1ff3b8b49a5e'),
+(82, 'https://images.unsplash.com/photo-1556020685-ae41abfc9365'),
 (83, 'https://images.unsplash.com/photo-1560185007-cde436f6a4d0'),
 (84, 'https://images.unsplash.com/photo-1586023492125-27b2c045efd7'),
 (85, 'https://images.unsplash.com/photo-1502672260266-1c1ef2d93688'),
-(86, 'https://images.unsplash.com/photo-1522771739844-6a9a6d99a55d'),
+(86, 'https://images.unsplash.com/photo-1598928506311-c55ded91a20c'),
 (87, 'https://images.unsplash.com/photo-1631049307264-da0ec9d70304'),
 (88, 'https://images.unsplash.com/photo-1522708323590-d24dbb6b0267'),
 (89, 'https://images.unsplash.com/photo-1505691723518-36a5ac3be353'),
 (90, 'https://images.unsplash.com/photo-1493809842364-78817add7ffb'),
 (91, 'https://images.unsplash.com/photo-1560448204-e02f11c3d0e2'),
-(92, 'https://images.unsplash.com/photo-1555854855-1ff3b8b49a5e'),
+(92, 'https://images.unsplash.com/photo-1556020685-ae41abfc9365'),
 (93, 'https://images.unsplash.com/photo-1560185007-cde436f6a4d0'),
 (94, 'https://images.unsplash.com/photo-1586023492125-27b2c045efd7'),
 (95, 'https://images.unsplash.com/photo-1502672260266-1c1ef2d93688'),
-(96, 'https://images.unsplash.com/photo-1522771739844-6a9a6d99a55d'),
+(96, 'https://images.unsplash.com/photo-1598928506311-c55ded91a20c'),
 (97, 'https://images.unsplash.com/photo-1631049307264-da0ec9d70304'),
 (98, 'https://images.unsplash.com/photo-1522708323590-d24dbb6b0267'),
 (99, 'https://images.unsplash.com/photo-1505691723518-36a5ac3be353'),
@@ -429,71 +429,71 @@ INSERT INTO room_images (room_id, image) VALUES
 (102, 'https://images.unsplash.com/photo-1505691723518-36a5ac3be353'),
 (103, 'https://images.unsplash.com/photo-1493809842364-78817add7ffb'),
 (104, 'https://images.unsplash.com/photo-1560448204-e02f11c3d0e2'),
-(105, 'https://images.unsplash.com/photo-1555854855-1ff3b8b49a5e'),
+(105, 'https://images.unsplash.com/photo-1556020685-ae41abfc9365'),
 (106, 'https://images.unsplash.com/photo-1560185007-cde436f6a4d0'),
 (107, 'https://images.unsplash.com/photo-1586023492125-27b2c045efd7'),
 (108, 'https://images.unsplash.com/photo-1502672260266-1c1ef2d93688'),
-(109, 'https://images.unsplash.com/photo-1522771739844-6a9a6d99a55d'),
+(109, 'https://images.unsplash.com/photo-1598928506311-c55ded91a20c'),
 (110, 'https://images.unsplash.com/photo-1631049307264-da0ec9d70304'),
 (111, 'https://images.unsplash.com/photo-1522708323590-d24dbb6b0267'),
 (112, 'https://images.unsplash.com/photo-1505691723518-36a5ac3be353'),
 (113, 'https://images.unsplash.com/photo-1493809842364-78817add7ffb'),
 (114, 'https://images.unsplash.com/photo-1560448204-e02f11c3d0e2'),
-(115, 'https://images.unsplash.com/photo-1555854855-1ff3b8b49a5e'),
+(115, 'https://images.unsplash.com/photo-1556020685-ae41abfc9365'),
 (116, 'https://images.unsplash.com/photo-1560185007-cde436f6a4d0'),
 (117, 'https://images.unsplash.com/photo-1586023492125-27b2c045efd7'),
 (118, 'https://images.unsplash.com/photo-1502672260266-1c1ef2d93688'),
-(119, 'https://images.unsplash.com/photo-1522771739844-6a9a6d99a55d'),
+(119, 'https://images.unsplash.com/photo-1598928506311-c55ded91a20c'),
 (120, 'https://images.unsplash.com/photo-1631049307264-da0ec9d70304'),
 (121, 'https://images.unsplash.com/photo-1522708323590-d24dbb6b0267'),
 (122, 'https://images.unsplash.com/photo-1505691723518-36a5ac3be353'),
 (123, 'https://images.unsplash.com/photo-1493809842364-78817add7ffb'),
 (124, 'https://images.unsplash.com/photo-1560448204-e02f11c3d0e2'),
-(125, 'https://images.unsplash.com/photo-1555854855-1ff3b8b49a5e'),
+(125, 'https://images.unsplash.com/photo-1556020685-ae41abfc9365'),
 (126, 'https://images.unsplash.com/photo-1560185007-cde436f6a4d0'),
 (127, 'https://images.unsplash.com/photo-1586023492125-27b2c045efd7'),
 (128, 'https://images.unsplash.com/photo-1502672260266-1c1ef2d93688'),
-(129, 'https://images.unsplash.com/photo-1522771739844-6a9a6d99a55d'),
+(129, 'https://images.unsplash.com/photo-1598928506311-c55ded91a20c'),
 (130, 'https://images.unsplash.com/photo-1631049307264-da0ec9d70304'),
 (131, 'https://images.unsplash.com/photo-1522708323590-d24dbb6b0267'),
 (132, 'https://images.unsplash.com/photo-1505691723518-36a5ac3be353'),
 (133, 'https://images.unsplash.com/photo-1493809842364-78817add7ffb'),
 (134, 'https://images.unsplash.com/photo-1560448204-e02f11c3d0e2'),
-(135, 'https://images.unsplash.com/photo-1555854855-1ff3b8b49a5e'),
+(135, 'https://images.unsplash.com/photo-1556020685-ae41abfc9365'),
 (136, 'https://images.unsplash.com/photo-1560185007-cde436f6a4d0'),
 (137, 'https://images.unsplash.com/photo-1586023492125-27b2c045efd7'),
 (138, 'https://images.unsplash.com/photo-1502672260266-1c1ef2d93688'),
-(139, 'https://images.unsplash.com/photo-1522771739844-6a9a6d99a55d'),
+(139, 'https://images.unsplash.com/photo-1598928506311-c55ded91a20c'),
 (140, 'https://images.unsplash.com/photo-1631049307264-da0ec9d70304'),
 (141, 'https://images.unsplash.com/photo-1522708323590-d24dbb6b0267'),
 (142, 'https://images.unsplash.com/photo-1505691723518-36a5ac3be353'),
 (143, 'https://images.unsplash.com/photo-1493809842364-78817add7ffb'),
 (144, 'https://images.unsplash.com/photo-1560448204-e02f11c3d0e2'),
-(145, 'https://images.unsplash.com/photo-1555854855-1ff3b8b49a5e'),
+(145, 'https://images.unsplash.com/photo-1556020685-ae41abfc9365'),
 (146, 'https://images.unsplash.com/photo-1560185007-cde436f6a4d0'),
 (147, 'https://images.unsplash.com/photo-1586023492125-27b2c045efd7'),
 (148, 'https://images.unsplash.com/photo-1502672260266-1c1ef2d93688'),
-(149, 'https://images.unsplash.com/photo-1522771739844-6a9a6d99a55d'),
+(149, 'https://images.unsplash.com/photo-1598928506311-c55ded91a20c'),
 (150, 'https://images.unsplash.com/photo-1631049307264-da0ec9d70304'),
 (151, 'https://images.unsplash.com/photo-1522708323590-d24dbb6b0267'),
 (152, 'https://images.unsplash.com/photo-1505691723518-36a5ac3be353'),
 (153, 'https://images.unsplash.com/photo-1493809842364-78817add7ffb'),
 (154, 'https://images.unsplash.com/photo-1560448204-e02f11c3d0e2'),
-(155, 'https://images.unsplash.com/photo-1555854855-1ff3b8b49a5e'),
+(155, 'https://images.unsplash.com/photo-1556020685-ae41abfc9365'),
 (156, 'https://images.unsplash.com/photo-1560185007-cde436f6a4d0'),
 (157, 'https://images.unsplash.com/photo-1586023492125-27b2c045efd7'),
 (158, 'https://images.unsplash.com/photo-1502672260266-1c1ef2d93688'),
-(159, 'https://images.unsplash.com/photo-1522771739844-6a9a6d99a55d'),
+(159, 'https://images.unsplash.com/photo-1598928506311-c55ded91a20c'),
 (160, 'https://images.unsplash.com/photo-1631049307264-da0ec9d70304'),
 (161, 'https://images.unsplash.com/photo-1522708323590-d24dbb6b0267'),
 (162, 'https://images.unsplash.com/photo-1505691723518-36a5ac3be353'),
 (163, 'https://images.unsplash.com/photo-1493809842364-78817add7ffb'),
 (164, 'https://images.unsplash.com/photo-1560448204-e02f11c3d0e2'),
-(165, 'https://images.unsplash.com/photo-1555854855-1ff3b8b49a5e'),
+(165, 'https://images.unsplash.com/photo-1556020685-ae41abfc9365'),
 (166, 'https://images.unsplash.com/photo-1560185007-cde436f6a4d0'),
 (167, 'https://images.unsplash.com/photo-1586023492125-27b2c045efd7'),
 (168, 'https://images.unsplash.com/photo-1502672260266-1c1ef2d93688'),
-(169, 'https://images.unsplash.com/photo-1522771739844-6a9a6d99a55d'),
+(169, 'https://images.unsplash.com/photo-1598928506311-c55ded91a20c'),
 (170, 'https://images.unsplash.com/photo-1631049307264-da0ec9d70304')
 ON CONFLICT DO NOTHING;
 
