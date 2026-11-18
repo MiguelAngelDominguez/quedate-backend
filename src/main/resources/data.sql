@@ -496,3 +496,11 @@ INSERT INTO room_images (room_id, image) VALUES
 (169, 'https://images.unsplash.com/photo-1522771739844-6a9a6d99a55d'),
 (170, 'https://images.unsplash.com/photo-1631049307264-da0ec9d70304')
 ON CONFLICT DO NOTHING;
+
+-- Fix sequences after explicit ID inserts (so new records get correct auto-increment IDs)
+SELECT setval('rooms_id_seq', (SELECT MAX(id) FROM rooms));
+SELECT setval('users_id_seq', (SELECT MAX(id) FROM users));
+SELECT setval('locations_id_seq', (SELECT MAX(id) FROM locations));
+SELECT setval('universities_id_seq', (SELECT MAX(id) FROM universities));
+SELECT setval('landlords_id_seq', (SELECT MAX(id) FROM landlords));
+SELECT setval('publications_id_seq', (SELECT MAX(id) FROM publications));
