@@ -16,12 +16,14 @@ import com.quedate.repository.UniversityRepository;
 import com.quedate.repository.UserRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
 import java.util.Set;
 
 @Component
+@Profile("dev")
 public class DataSeeder implements CommandLineRunner {
 
     private final RoleRepository roleRepository;
