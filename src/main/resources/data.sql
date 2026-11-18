@@ -425,4 +425,4 @@ INSERT INTO room_images (room_id, image) VALUES
 (98, 'https://images.unsplash.com/photo-1522708323590-d24dbb6b0267'),
 (99, 'https://images.unsplash.com/photo-1505691723518-36a5ac3be353'),
 (100, 'https://images.unsplash.com/photo-1493809842364-78817add7ffb')
-ON CONFLICT (room_id, image) DO NOTHING;
+ON CONFLICT DO NOTHING;
