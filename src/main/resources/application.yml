@@ -50,6 +50,9 @@ spring:
     hibernate:
       ddl-auto: update
     defer-datasource-initialization: true
+  sql:
+    init:
+      continue-on-error: true
   mail:
     host: ${SMTP_HOST:localhost}
     port: ${SMTP_PORT:1025}
